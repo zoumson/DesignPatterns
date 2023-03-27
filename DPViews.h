@@ -14,6 +14,11 @@
 #include "DPMemento.h"
 #include "DPNullObject.h"
 #include "DPIterMemNOb.h"
+#include "DPFactoryMethod.h"
+#include"DPAbstractFactory.h"
+#include "DPBuilder.h"
+#include "DPPrototype.h"
+#include "DPSingleton.h"
 namespace za
 {
 	namespace dp
@@ -35,6 +40,14 @@ namespace za
 			void memento();
 			void nullObject();
 			void iterMemNob();
+			namespace creational
+			{
+				void factoryMethod();
+				void abstracFactory();
+				void builder();
+				void prototypee();
+				void singleton();
+			}
 		}
 
 	}

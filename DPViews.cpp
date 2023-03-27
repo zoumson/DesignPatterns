@@ -368,6 +368,129 @@ namespace za
 				std::cout << "\n";
 			}
 
+			namespace creational
+			{
+				void factoryMethod()
+				{
+					za::dp::creational::fm::CoffeeMakerFactory coffeeMachine;
+					za::dp::creational::fm::Coffee* cup;
+					cup = coffeeMachine.GetCoffee();
+
+					std::cout << std::endl << "You had asked for a(n)" << cup->getType() << std::endl;
+				}
+				void abstracFactory()
+				{
+					za::dp::creational::af::CarFactory* CarPlant;
+					int choice;
+
+					std::cout << "Select a car type: " << std::endl;
+					std::cout << "1: Gasoline" << std::endl;
+					std::cout << "2: Electric" << std::endl;
+					std::cout << "Selection: ";
+					std::cin >> choice;
+					std::cout << std::endl;
+
+					switch (choice)
+					{
+					case 1:
+						CarPlant = new za::dp::creational::af::GasCarFactory;
+						break;
+					case 2:
+						CarPlant = new za::dp::creational::af::ElectricCarFactory;
+						break;
+					default:
+						std::cout << "Invalid Selection" << std::endl;
+						CarPlant = nullptr;
+						break;
+					}
+
+					if (CarPlant != nullptr)
+					{
+						za::dp::creational::af::Door* myDoor = CarPlant->BuildDoor();
+						za::dp::creational::af::Engine* myEngine = CarPlant->BuildEngine();
+
+						myDoor->Open();
+						myEngine->Run();
+					}
+				}
+				void builder()
+				{
+					za::dp::creational::bui::MealBuilder * cook = new za::dp::creational::bui::MealBuilder;
+					za::dp::creational::bui::MealCombo* meal;
+					int choice;
+
+					// Prompt user for their meal choice
+					std::cout << "Select a meal: " << std::endl;
+					std::cout << "1: Hamburger Meal" << std::endl;
+					std::cout << "2: Hotdog Meal" << std::endl;
+					std::cout << "Selection: ";
+					std::cin >> choice;
+					std::cout << std::endl;
+
+					// Instantiate the appropriate builder based on user input
+					switch (choice)
+					{
+					case 1:
+						cook = new za::dp::creational::bui::BurgerMeal;
+						break;
+					case 2:
+						cook = new za::dp::creational::bui::HotdogMeal;
+						break;
+					default:
+						std::cout << "Invalid Selection" << std::endl;
+						cook = nullptr;
+						break;
+					}
+
+					std::cout << "Making selected meal" << std::endl;
+
+					// Build the complex object
+					cook->cookEntree();
+					cook->cookSide();
+					cook->fillDrink();
+					meal = cook->getMeal();
+					std::cout << meal->openMealBag() << std::endl;
+				}
+				void prototypee()
+				{
+					//create initial instance of a Sheep
+					za::dp::creational::pro::Sheep* sheep0 = new za::dp::creational::pro::Sheep;
+					sheep0->setHairColor("white");
+					sheep0->setTail(5);
+					sheep0->setWeight(90);
+					sheep0->setHeight(1);
+					sheep0->setAge(5);
+
+					//create initial instance of a Cow
+					za::dp::creational::pro::Cow* cow0 = new za::dp::creational::pro::Cow;
+					cow0->setHairColor("brown");
+					cow0->setTail(20);
+					cow0->setWeight(790);
+					cow0->setHeight(2);
+					cow0->setAge(8);
+
+					za::dp::creational::pro::Animal* farm[3];
+
+					//use cloning to populate the farm
+					farm[0] = sheep0->clone();
+					farm[1] = cow0->clone();
+
+					//change a cow property
+					farm[1]->setWeight(1000);
+
+					//shear a Sheep and clone it
+					sheep0->shearing();
+					farm[2] = sheep0->clone();
+
+				}
+				void singleton()
+				{
+					za::dp::creational::sin::Leader::getInstance()->giveSpeech();
+					za::dp::creational::sin::Leader* elected = elected->getInstance();
+					elected->giveSpeech();
+				}
+			}
+
 			
 		}
 

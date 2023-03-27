@@ -127,16 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DPAbstractFactory.cpp" />
+    <ClCompile Include="DPbuilder.cpp" />
     <ClCompile Include="DPChainOfResponsability.cpp" />
     <ClCompile Include="DesignPatterns.cpp" />
     <ClCompile Include="DPChainRespObserCmd.cpp" />
     <ClCompile Include="DPCommand.cpp" />
+    <ClCompile Include="DPFactoryMethod.cpp" />
     <ClCompile Include="DPInterpreter.cpp" />
     <ClCompile Include="DPIterator.cpp" />
     <ClCompile Include="DPIterMemNOb.cpp" />
     <ClCompile Include="DPMediator.cpp" />
     <ClCompile Include="DPMemento.cpp" />
     <ClCompile Include="DPNullObject.cpp" />
+    <ClCompile Include="DPPrototype.cpp" />
+    <ClCompile Include="DPSingleton.cpp" />
     <ClCompile Include="DPState.cpp" />
     <ClCompile Include="DPStrategy.cpp" />
     <ClCompile Include="DPTemplate.cpp" />
@@ -147,15 +152,20 @@
     <ClCompile Include="DPVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DPAbstractFactory.h" />
+    <ClInclude Include="DPbuilder.h" />
     <ClInclude Include="DPChainOfResponsability.h" />
     <ClInclude Include="DPChainRespObserCmd.h" />
     <ClInclude Include="DPCommand.h" />
+    <ClInclude Include="DPFactoryMethod.h" />
     <ClInclude Include="DPInterpreter.h" />
     <ClInclude Include="DPIterator.h" />
     <ClInclude Include="DPIterMemNOb.h" />
     <ClInclude Include="DPMediator.h" />
     <ClInclude Include="DPMemento.h" />
     <ClInclude Include="DPNullObject.h" />
+    <ClInclude Include="DPPrototype.h" />
+    <ClInclude Include="DPSingleton.h" />
     <ClInclude Include="DPState.h" />
     <ClInclude Include="DPStrategy.h" />
     <ClInclude Include="DPTemplate.h" />
