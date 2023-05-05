@@ -16,6 +16,7 @@ namespace za
 			namespace af
 			{
 #pragma region Example1
+
 #pragma region Interface11
 				//Door Objects
 				class Door
@@ -27,6 +28,7 @@ namespace za
 					virtual void Open() = 0;
 				};
 #pragma endregion Interface11
+
 #pragma region Product11
 				class GasCarDoor : public Door
 				{
@@ -43,6 +45,7 @@ namespace za
 					void Open() override;
 				};
 #pragma endregion Product11
+
 #pragma region Interface12
 				//Engine objects
 				class Engine
@@ -54,6 +57,7 @@ namespace za
 					virtual void Run() = 0;
 				};
 #pragma endregion Interface12
+
 #pragma region Product12
 				class GasEngine : public Engine
 				{
@@ -69,6 +73,7 @@ namespace za
 					void Run() override;
 				};
 #pragma endregion Product12
+
 #pragma region Factory1
 				//Factories
 				class CarFactory
@@ -97,7 +102,21 @@ namespace za
 					std::unique_ptr<Door> BuildDoor() override;
 					std::unique_ptr<Engine> BuildEngine()override;
 				};
+
+				static std::ostream& operator<<(std::ostream& os, const CarFactory::CAR_FACTORIES type)
+				{
+					switch (type)
+					{
+					case CarFactory::CAR_FACTORIES::GAS1:
+						return os << "Gas1";
+
+					case CarFactory::CAR_FACTORIES::ELECTRIC1:
+						return os << "Electric1";
+					}
+					return os;
+				}
 #pragma endregion Factory1
+
 #pragma region User1
 				void buildCar(CarFactory& factory);
 #pragma endregion User1
@@ -155,7 +174,6 @@ namespace za
 
 #pragma endregion Product22
 
-
 #pragma region Factory2
 				class AbstractFactory2 
 				{
@@ -184,16 +202,29 @@ namespace za
 					std::unique_ptr<ProductB2> createProductB() override;
 				};
 
+				static std::ostream& operator<<(std::ostream& os, const AbstractFactory2::PRODUCT2_FACTORIES type)
+				{
+					switch (type)
+					{
+					case AbstractFactory2::PRODUCT2_FACTORIES::PRODUCT2_1:
+						return os << "Product21";
+
+					case AbstractFactory2::PRODUCT2_FACTORIES::PRODUCT2_2:
+						return os << "Product22";
+					}
+					return os;
+				}
 
 #pragma endregion Factory2
+
 #pragma region User2
 				void buildProduct2(AbstractFactory2& factory);
 #pragma endregion User2
 
-
 #pragma endregion Example2
 
 #pragma region Example3
+
 #pragma region Interface31
 				class IDumb
 				{
@@ -294,11 +325,30 @@ namespace za
 					std::unique_ptr<ISmart> createSmart() override;
 					std::unique_ptr<IDumb> createDumb() override;
 				};
+
+
+				static std::ostream& operator<<(std::ostream& os, const APhoneFactory::PHONE_FACTORIES type)
+				{
+					switch (type)
+					{
+					case APhoneFactory::PHONE_FACTORIES::HTC:
+						return os << "Htc";
+
+					case APhoneFactory::PHONE_FACTORIES::NOKIA:
+						return os << "Nokia";
+
+					case APhoneFactory::PHONE_FACTORIES::SAMSUNG:
+						return os << "Samsung";
+
+					}
+					return os;
+				}
 #pragma endregion Factory3
 
 #pragma region User3
 				void buildPhone(APhoneFactory& factory);
 #pragma endregion User3
+
 #pragma endregion Example3
 
 #pragma region Example4
@@ -384,7 +434,23 @@ namespace za
 					std::unique_ptr<Label4> createLabel() override;
 				};
 
+
+				static std::ostream& operator<<(std::ostream& os, const GUIFactory4::GUI_FACTORIES type)
+				{
+					switch (type)
+					{
+					case GUIFactory4::GUI_FACTORIES::LINUX4:
+						return os << "Linux4";
+
+					case GUIFactory4::GUI_FACTORIES::WINDOWS4:
+						return os << "Windows4";
+
+					}
+					return os;
+				}
+
 #pragma endregion Factory4
+
 #pragma region User4
 				/* User code */
 				void buildGUI(GUIFactory4& factory);
@@ -394,7 +460,6 @@ namespace za
 
 #pragma region Example5
 
-
 #pragma region Interface51
 				class Bgcolor5
 				{
@@ -403,6 +468,7 @@ namespace za
 
 				};
 #pragma endregion Interface51
+
 #pragma region Product51
 				class LightBgColour5 : public Bgcolor5
 				{
@@ -428,6 +494,7 @@ namespace za
 
 				};
 #pragma endregion Interface52
+
 #pragma region Product52
 				class LightText5 : public Text5
 				{
@@ -445,7 +512,6 @@ namespace za
 
 				};
 #pragma endregion Product52
-
 
 #pragma region Factory5
 				class ThemeFactory5
@@ -477,7 +543,21 @@ namespace za
 
 				};
 
+				static std::ostream& operator<<(std::ostream& os, const ThemeFactory5::THEME_FACTORIES type)
+				{
+					switch (type)
+					{
+					case ThemeFactory5::THEME_FACTORIES::DARK5:
+						return os << "Dark5";
+
+					case ThemeFactory5::THEME_FACTORIES::LIGHT5:
+						return os << "Light5";
+
+					}
+					return os;
+				}
 #pragma endregion Factory5
+
 #pragma region User5
 				/* User code */
 				void buildTheme(ThemeFactory5& factory);

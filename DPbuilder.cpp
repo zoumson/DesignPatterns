@@ -16,160 +16,183 @@ namespace za
 			namespace bui
 			{
 
-
-
 #pragma region Example1
-#pragma region Entrees
 
-					const char* Entree::getEntree()
+#pragma region Material1
+
+#pragma region Material11
+
+					const char* Entree1::getEntree()
 					{
 						return _entree;
 					};
 
-					Burger::Burger()
+					Burger1::Burger1()
 					{
 						std::cout << "\n Grill burger patty, add tomatoes and place them in a bun";
 						strcpy_s(_entree, "hamburger");
 					};
 
-					Hotdog::Hotdog()
+					Hotdog1::Hotdog1()
 					{
 						std::cout << "\n Cook sausage and place it in a bun";
 						strcpy_s(_entree, "hotdog");
 					};
 
-#pragma endregion Entrees
+#pragma endregion Material11
 
-#pragma region Sides
-					char* Side::getSide()
+#pragma region Material12
+					char* Side1::getSide()
 					{
 						return _side;
 					};
 
-					Fries::Fries()
+					Fries1::Fries1()
 					{
 						std::cout << "\n Fry and season potatoes";
 						strcpy_s(_side, "fries");
 					};
 
-					Salad::Salad()
+					Salad1::Salad1()
 					{
 						std::cout << "\n Toss greens and dressing together";
 						strcpy_s(_side, "salad");
 					};
 
-#pragma endregion Sides
+#pragma endregion Material12
+
+#pragma region Material13
 
 
-					Drink::Drink()
+					Drink1::Drink1()
 					{
 						std::cout << "\n Fill cup with soda" << std::endl;
 						strcpy_s(_drink, "soda");
 					};
-					char* Drink::getDrink()
+					char* Drink1::getDrink()
 					{
 						return _drink;
 					};
+#pragma endregion Material13
 
-					MealCombo::MealCombo(const char* type)
+#pragma endregion Material1
+
+#pragma region Product1
+
+					MealCombo1::MealCombo1(const char* type)
 					{
 						sprintf_s(_bag, "\n %s meal combo:", type);
 					};
-					void MealCombo::setEntree(Entree* e)
+					void MealCombo1::setEntree(Entree1* e)
 					{
 						entree = e;
 					};
-					void MealCombo::setSide(Side* s)
+					void MealCombo1::setSide(Side1* s)
 					{
 						side = s;
 					};
-					void MealCombo::setDrink(Drink* d)
+					void MealCombo1::setDrink(Drink1* d)
 					{
 						drink = d;
 					};
-					const char* MealCombo::openMealBag()
+					const char* MealCombo1::openMealBag()
 					{
 						sprintf_s(_bag, "%s %s, %s, %s", _bag, entree->getEntree(), side->getSide(), drink->getDrink());
+						std::cout << "\n" << _bag << "\n";
 						return _bag;
 					};
+#pragma endregion Product1
 
-#pragma region Builders
+#pragma region Builder1
 
-					MealCombo* MealBuilder::getMeal()
+					BurgerMeal1::BurgerMeal1()
 					{
-						return _meal;
+						_meal = std::make_unique<MealCombo1>("Burger");
 					};
-
-					BurgerMeal::BurgerMeal()
+					void BurgerMeal1::cookEntree()
 					{
-						_meal = new MealCombo("Burger");
-					};
-					void BurgerMeal::cookEntree()
-					{
-						Burger* burger = new Burger;
+						Burger1* burger = new Burger1;
 						_meal->setEntree(burger);
 					};
-					void BurgerMeal::cookSide()
+					void BurgerMeal1::cookSide()
 					{
-						Fries* fries = new Fries;
+						Fries1* fries = new Fries1;
 						_meal->setSide(fries);
 					};
-					void BurgerMeal::fillDrink()
+					void BurgerMeal1::fillDrink()
 					{
-						Drink* drink = new Drink;
+						Drink1* drink = new Drink1;
 						_meal->setDrink(drink);
 					};
 
-					HotdogMeal::HotdogMeal()
+					HotdogMeal1::HotdogMeal1()
 					{
-						_meal = new MealCombo("Hotdog");
+						_meal = std::make_unique<MealCombo1>("Hotdog");
 					};
-					void HotdogMeal::cookEntree()
+					void HotdogMeal1::cookEntree()
 					{
-						Hotdog* hotdog = new Hotdog;
+						Hotdog1* hotdog = new Hotdog1;
 						_meal->setEntree(hotdog);
 					}
-					void HotdogMeal::cookSide()
+					void HotdogMeal1::cookSide()
 					{
-						Salad* caesar = new Salad;
+						Salad1* caesar = new Salad1;
 						_meal->setSide(caesar);
 					};
-					void HotdogMeal::fillDrink()
+					void HotdogMeal1::fillDrink()
 					{
-						Drink* drink = new Drink;
+						Drink1* drink = new Drink1;
 						_meal->setDrink(drink);
 					};
-#pragma endregion Builders
+
+					std::shared_ptr<MealCombo1> MealBuilder1::getMeal()
+					{
+						return std::move(_meal);
+					};
+					std::unique_ptr< MealBuilder1> MealBuilder1::create(const MealBuilder1::MEAL1_BUILDERS& type)
+					{
+						switch (type)
+						{
+						case MealBuilder1::MEAL1_BUILDERS::BURGER1:
+							return std::make_unique<BurgerMeal1>();
+
+						case MealBuilder1::MEAL1_BUILDERS::HOTDOG1:
+							return std::make_unique<HotdogMeal1>();
+						}
+						return nullptr;
+					}
+#pragma endregion Builder1
+
 #pragma endregion Example1
+
 #pragma region Example2
 
-
-#pragma region Email
-					void Email::setSender(const std::string& sender)
+#pragma region Product2
+					void Email2::setSender(const std::string& sender)
 					{
 						_sender = sender;
 					}
 										
 					
-					void Email::setRecipient(const std::string& recipient)
+					void Email2::setRecipient(const std::string& recipient)
 					{
 						_recipient = recipient;
 					}
 															
 					
-					void Email::setSubject(const std::string& subject)
+					void Email2::setSubject(const std::string& subject)
 					{
 						_subject = subject;
 					}
 
 										
-					void Email::setBody(const std::string& body)
+					void Email2::setBody(const std::string& body)
 					{
 						_body = body;
 					}
 
 															
-					void Email::showEmail()
+					void Email2::showEmail()
 					{
 						std::cout << "Sender: " << _sender << std::endl;
 						std::cout << "Recipient: " << _recipient << std::endl;
@@ -178,69 +201,70 @@ namespace za
 					}
 
 
-#pragma endregion Email
+#pragma endregion Product2
 
-#pragma region EmailBuilder
+#pragma region Builder2
 
 
-					EmailBuilder::EmailBuilder()
+					EmailBuilder2::EmailBuilder2()
 					{
 						//_email = new Email();
-						_email = std::make_unique<Email>();
+						_email = std::make_unique<Email2>();
 					}
 
-					EmailBuilder::~EmailBuilder()
+					EmailBuilder2::~EmailBuilder2()
 					{
 						//using unique ptr
 						//delete _email;
 					}
 
-					void EmailBuilder::setSender(const std::string& sender)
+
+					void EmailBuilder2::setSender(const std::string& sender)
 					{
 						_email->setSender(sender);
 					}
 
-					void EmailBuilder::setRecipient(const std::string& recipient)
+					void EmailBuilder2::setRecipient(const std::string& recipient)
 					{
 						_email->setRecipient(recipient);
 					}
 
-
-					void EmailBuilder::setSubject(const std::string& subject)
+					void EmailBuilder2::setSubject(const std::string& subject)
 					{
 						_email->setSubject(subject);
 					}
 
-					void EmailBuilder::setBody(const std::string& body)
+					void EmailBuilder2::setBody(const std::string& body)
 					{
 						_email->setBody(body);
 					}
 
-					Email* EmailBuilder::getEmail()
+
+					std::shared_ptr<Email2> EmailBuilder2::getEmail()
 					{
-						//return _email;
-						return _email.get();
+						return std::move(_email);
 					}
-#pragma endregion EmailBuilder
+#pragma endregion Builder2
 
 #pragma endregion Example2
 
 #pragma region Example3
-#pragma region Product 
 
-					void Pizza::setDough(const std::string& dough)
+#pragma region Product3 
+
+					void Pizza3::setDough(const std::string& dough)
 					{
 						_dough = dough;
 					}
-					void Pizza::setSauce(const std::string& sauce)
+					void Pizza3::setSauce(const std::string& sauce)
 					{
 						_sauce = sauce;
 					}
-					void Pizza::setTopping(const std::string& topping)
+					void Pizza3::setTopping(const std::string& topping)
 					{
 						_topping = topping;
 					}
-					void Pizza::open() const 
+					void Pizza3::open() const 
 					{
 						std::cout << "The Pizza have " <<
 							_dough << " dough, " <<
@@ -248,66 +272,66 @@ namespace za
 							_topping << " topping." <<
 							std::endl;
 					}
-#pragma endregion Product 
+#pragma endregion Product3 
 
-#pragma region Builders
-					void PizzaBuilder::createNewPizza() 
+#pragma region Builder3
+
+					PizzaBuilder3::PizzaBuilder3()
 					{
-						_pizza = std::make_unique<Pizza>();
+						_pizza = std::make_unique<Pizza3>();
 					}
-					Pizza* PizzaBuilder::getPizza() 
+					std::unique_ptr< PizzaBuilder3> PizzaBuilder3::create(const PizzaBuilder3::PIZZA3_BUILDERS& type)
 					{
-						return _pizza.release();
+
+						switch (type)
+						{
+						case PizzaBuilder3::PIZZA3_BUILDERS::HAWAIIAN3:
+							return std::make_unique<HawaiianPizzaBuilder3>();
+
+						case PizzaBuilder3::PIZZA3_BUILDERS::SPICY3:
+							return std::make_unique<SpicyPizzaBuilder3>();
+						}
+						return nullptr;
+
+					}
+					std::shared_ptr<Pizza3> PizzaBuilder3::getPizza() 
+					{
+						return std::move(_pizza);
 					}
 
-					void HawaiianPizzaBuilder::buildDough()  
+					void HawaiianPizzaBuilder3::buildDough()  
 					{
 						_pizza->setDough("Hawaiian dough");
 					}
-					void HawaiianPizzaBuilder::buildSauce()  
+					void HawaiianPizzaBuilder3::buildSauce()  
 					{
 						_pizza->setSauce("Hawaiian sauce");
 					}
-					void HawaiianPizzaBuilder::buildTopping()  
+					void HawaiianPizzaBuilder3::buildTopping()  
 					{
 						_pizza->setTopping("Hawaiian topping");
 					}
 
-					void SpicyPizzaBuilder::buildDough()
+					void SpicyPizzaBuilder3::buildDough()
 					{
 						_pizza->setDough("Spicy dough");
 					}
-					void SpicyPizzaBuilder::buildSauce()
+					void SpicyPizzaBuilder3::buildSauce()
 					{
 						_pizza->setSauce("Spicy sauce");
 					}
-					void SpicyPizzaBuilder::buildTopping()
+					void SpicyPizzaBuilder3::buildTopping()
 					{
 						_pizza->setTopping("Spicy topping");
 					}
 
 
-#pragma endregion Builders
-
-#pragma region Manager
-					void Cook::openPizza() const 
-					{
-						_pizzaBuilder->getPizza()->open();
-					}
-					void Cook::createPizza(PizzaBuilder* pizzaBuilder)
-					{
-						_pizzaBuilder = pizzaBuilder;
-						_pizzaBuilder->createNewPizza();
-						_pizzaBuilder->buildDough();
-						_pizzaBuilder->buildSauce();
-						_pizzaBuilder->buildTopping();
-					}
-#pragma endregion Manager
+#pragma endregion Builder3
 
 #pragma endregion Example3
 
-
 #pragma region Example4
+
 #pragma region Product4 
 					void Burger4::setBread(const std::string& bread) 
 					{
@@ -368,15 +392,17 @@ namespace za
 						__burger->setVegetables(vegetables);
 					}
 
-					Burger4* BurgerBuilder4::getBurger()
+					std::shared_ptr<Burger4> BurgerBuilder4::getBurger()
 					{
 
-						return __burger.get();
+						//return __burger.get();
+						return std::move(__burger);
 						//return _burger;
 					}
 
 
 #pragma endregion Builder4
+
 #pragma endregion Example4
 
 			}

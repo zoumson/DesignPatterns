@@ -376,82 +376,49 @@ namespace za
 					using namespace za::dp::creational::fm;
 					auto example1 = [&]()
 					{
-						CoffeeMakerFactory coffeeMachine;
-						Coffee* cup;
-						cup = coffeeMachine.GetCoffee();
-
-						std::cout << std::endl << "You had asked for a(n)" << cup->getType() << std::endl;
+						buildCoffee1(CoffeeMakerFactory1::COFFEE1_TYPES::CAPPUCCINO1);
 					};
 					auto example2 = [&]()
 					{
-						std::unique_ptr<CarFactory2> factory1 = std::make_unique<HondaFactory2>();
-						std::unique_ptr<CarFactory2> factory2 = std::make_unique<ToyotaFactory2>();						
-						
-						
-						std::unique_ptr<Car2> car1 = factory1->createCar();
-						std::unique_ptr<Car2> car2 = factory2->createCar();
+						//std::unique_ptr<CarFactory2> factory1 = std::make_unique<HondaFactory2>();
+						//std::unique_ptr<CarFactory2> factory2 = std::make_unique<ToyotaFactory2>();						
+						//
+						//
+						//std::unique_ptr<Car2> car1 = factory1->createCar();
+						//std::unique_ptr<Car2> car2 = factory2->createCar();
 
-						std::cout << car1->getDescription() << std::endl;
-						std::cout << car2->getDescription() << std::endl;
+						//std::cout << car1->getDescription() << std::endl;
+						//std::cout << car2->getDescription() << std::endl;
+
+						buildCar2(CarFactory2::CAR2_TYPES::HONDA2);
 
 
 					};					
 					auto example3 = [&]()
 					{
 
-						std::unique_ptr<CharacterFactory> factory = std::make_unique<WizardFactory>();
-						std::unique_ptr<Character> character = factory->createCharacter();
-						character->printInfo();
-
-
-						factory = std::make_unique<KnightFactory>();
-						character = factory->createCharacter();
-						character->printInfo();
-
-
-						factory = std::make_unique<ArcherFactory>();
-						character = factory->createCharacter();
-						character->printInfo();
-
+						buildCharacter3(CharacterFactory3::CHARACTER3_TYPES::KNIGHT3);
 
 					};
 					auto example4 = [&]()
 					{
-
-						std::unique_ptr<Factory4> factory4 = std::make_unique<ConcreteFactoryA4>();
-						std::unique_ptr<Product4> product4 = factory4->createProduct();
-						product4->info();
-
-
-
-						factory4 = std::make_unique<ConcreteFactoryB4>();
-						product4 = factory4->createProduct();
-						product4->info();
-
+						buildProduct4(ProductFactory4::PRODUCT4_TYPES::PRODUCTB4);
 
 					};
 					auto example5 = [&]()
 					{
+						buildComputer5(ComputerFactory5::COMPUTER5_TYPES::DESKTOP5);
 					};
 					auto example6 = [&]()
 					{
-
-						auto pizza_information = [&](PizzaFactory6::PizzaType6 pizzatype6)
-						{
-							std::unique_ptr<Pizza6> pizza6 = PizzaFactory6::createPizza(pizzatype6);
-							std::cout << "Price of " << pizzatype6 << " is " << pizza6->getPrice() << std::endl;
-						};
-
-						pizza_information(PizzaFactory6::PizzaType6::HamMushroom6);
-						pizza_information(PizzaFactory6::PizzaType6::Deluxe6);
-						pizza_information(PizzaFactory6::PizzaType6::Hawaiian6);
+						buildPizza6(PizzaFactory6::PIZZA6_TYPES::HAMMUSHROOM6);
 					};
-					//example1();
-					//example2();
 
-					//example3();
-					//example4();
-					//example5();
+					example1();
+					example2();
+					example3();
+					example4();
+					example5();
 					example6();
 
 				}
@@ -485,102 +452,81 @@ namespace za
 						auto themeFactory = ThemeFactory5::create(ThemeFactory5::THEME_FACTORIES::DARK5);
 						buildTheme(*themeFactory);
 					};
-					//
-					//example1();
-					//example2();
-					//example3();
+					
+					example1();
+					example2();
+					example3();
 					example4();
-					//example5();
+					example5();
 				}
 				void builder()
 				{
+					using namespace za::dp::creational::bui;
 
 					auto example1 = [&]()
 					{
-						za::dp::creational::bui::MealBuilder* cook = new za::dp::creational::bui::MealBuilder;
-						za::dp::creational::bui::MealCombo* meal;
-						int choice;
 
-						// Prompt user for their meal choice
-						std::cout << "Select a meal: " << std::endl;
-						std::cout << "1: Hamburger Meal" << std::endl;
-						std::cout << "2: Hotdog Meal" << std::endl;
-						std::cout << "Selection: ";
-						std::cin >> choice;
-						std::cout << std::endl;
+						auto mealBuilder1 = MealBuilder1::create(MealBuilder1::MEAL1_BUILDERS::BURGER1);
 
-						// Instantiate the appropriate builder based on user input
-						switch (choice)
-						{
-						case 1:
-							cook = new za::dp::creational::bui::BurgerMeal;
-							break;
-						case 2:
-							cook = new za::dp::creational::bui::HotdogMeal;
-							break;
-						default:
-							std::cout << "Invalid Selection" << std::endl;
-							cook = nullptr;
-							break;
-						}
-
-						std::cout << "Making selected meal" << std::endl;
-
-						// Build the complex object
-						cook->cookEntree();
-						cook->cookSide();
-						cook->fillDrink();
-						meal = cook->getMeal();
-						std::cout << meal->openMealBag() << std::endl;
+						mealBuilder1->cookEntree();
+						mealBuilder1->cookSide();
+						mealBuilder1->fillDrink();
+						
+						auto meal1 = mealBuilder1->getMeal();
+						meal1->openMealBag();
+	
 					};
 
 					auto example2 = [&]()
 					{
 						//1. no argument, just create object itself 
-						za::dp::creational::bui::EmailBuilder emailBuilder;
+						EmailBuilder2 emailBuilder2;
 
 						//2. setting arguments of the object  one at a time 
-						emailBuilder.setSender("adama@gmail.com");
-						emailBuilder.setRecipient("adama@yahoo.com");
-						emailBuilder.setSubject("Learning Design Patterns");
-						emailBuilder.setBody("Hi Adama,\n\nJust a sending you resources to enhance your coding skills.\n\nBest regards,\n Adama");
+						emailBuilder2.setSender("adama@gmail.com");
+						emailBuilder2.setRecipient("adama@yahoo.com");
+						emailBuilder2.setSubject("Learning Design Patterns");
+						emailBuilder2.setBody("Hi Adama,\n\nJust a sending you resources to enhance your coding skills.\n\nBest regards,\n Adama");
 						//3. retrieve 
-						za::dp::creational::bui::Email* email = emailBuilder.getEmail();
+						auto email2 = emailBuilder2.getEmail();
 						//4. call the call operator to show the message
-						email->showEmail();
+						email2->showEmail();
 					};
 
 					auto example3 = [&]()
 					{
-						za::dp::creational::bui::Cook cook{};
-						za::dp::creational::bui::HawaiianPizzaBuilder hawaiianPizzaBuilder;
-						cook.createPizza(&hawaiianPizzaBuilder);
-						cook.openPizza();
+						auto pizzaBuilder3 = PizzaBuilder3::create(PizzaBuilder3::PIZZA3_BUILDERS::SPICY3);
 
-						za::dp::creational::bui::SpicyPizzaBuilder spicyPizzaBuilder;
-						cook.createPizza(&spicyPizzaBuilder);
-						cook.openPizza();
+						pizzaBuilder3->buildDough();
+						pizzaBuilder3->buildSauce();
+						pizzaBuilder3->buildTopping();
+
+						auto pizza3 = pizzaBuilder3->getPizza();
+						pizza3->open();
+
 					};
 
 					auto example4 = [&]()
 					{
-						za::dp::creational::bui::BurgerBuilder4 burgerBuilder4;
+						BurgerBuilder4 burgerBuilder4;
+
 						burgerBuilder4.setBread("Wheat");
 						burgerBuilder4.setMeat("Chicken");
 						burgerBuilder4.setCheese("Cheddar");
 						burgerBuilder4.setVegetables("Lettuce, Tomato");
 
-						za::dp::creational::bui::Burger4* burger4 = burgerBuilder4.getBurger();
+						auto burger4 = burgerBuilder4.getBurger();
 						burger4->showBurger();
 					};
 
-					//auto example5 = [&]()
-					//example1();
-					//example2();
-					//example3();
+					example1();
+					example2();
+					example3();
 					example4();
 
 				}
+				
+				
 				void prototypee()
 				{
 					//create initial instance of a Sheep

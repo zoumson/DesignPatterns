@@ -24,9 +24,12 @@ namespace za
 			namespace bui
 			{
 #pragma region Example1
-#pragma region Entrees
+
+#pragma region Material1
+
+#pragma region Material11
 				// Base Entree class
-				class Entree
+				class Entree1
 				{
 				protected:
 					char _entree[10];
@@ -35,23 +38,23 @@ namespace za
 				};
 
 				// Derived Buger class
-				class Burger : public Entree
+				class Burger1 : public Entree1
 				{
 				public:
-					Burger();
+					Burger1();
 				};
 
 				// Derived Hotdog class
-				class Hotdog : public Entree
+				class Hotdog1 : public Entree1
 				{
 				public:
-					Hotdog();
+					Hotdog1();
 				};
-#pragma endregion Entrees
+#pragma endregion Material11
 
-#pragma region Sides
+#pragma region Material12
 				// Base Side class
-				class Side
+				class Side1
 				{
 				protected:
 					char _side[10];
@@ -60,64 +63,77 @@ namespace za
 				};
 
 				//Derived Fries class
-				class Fries : public Side
+				class Fries1 : public Side1
 				{
 				public:
-					Fries();
+					Fries1();
 				};
 
 				//Derived Salad class
-				class Salad : public Side
+				class Salad1 : public Side1
 				{
 				public:
-					Salad();
+					Salad1();
 				};
-#pragma endregion Sides
+#pragma endregion Material12
 
-				class Drink
+#pragma region Material13
+
+				class Drink1
 				{
 				protected:
 					char _drink[10];
 				public:
-					Drink();
+					Drink1();
 					char* getDrink();
 				};
+#pragma endregion Material13
 
+#pragma endregion Material1
+
+#pragma region Product1
 				// Complex MealCombo object that contains an Entree, a Side and a Drink object
-				class MealCombo
+				class MealCombo1
 				{
 				private:
-					Entree* entree;
-					Side* side;
-					Drink* drink;
+					Entree1* entree;
+					Side1* side;
+					Drink1* drink;
 					char _bag[100];
 
 				public:
-					MealCombo(const char* type);
-					void setEntree(Entree* e);
-					void setSide(Side* s);
-					void setDrink(Drink* d);
+					MealCombo1(const char* type);
+					void setEntree(Entree1* e);
+					void setSide(Side1* s);
+					void setDrink(Drink1* d);
 					const char* openMealBag();
 				};
+#pragma endregion Product1
 
-#pragma region Builders
+#pragma region Builder1
 				// Base Builder
-				class MealBuilder
+				class MealBuilder1
 				{
 				protected:
-					MealCombo* _meal;
+					std::unique_ptr<MealCombo1> _meal;
 				public:
+					enum class MEAL1_BUILDERS
+					{
+						BURGER1,
+						HOTDOG1
+					};
 					virtual void cookEntree() {};
 					virtual void cookSide() {};
 					virtual void fillDrink() {};
-					MealCombo* getMeal();
+					std::shared_ptr <MealCombo1> getMeal();
+					static std::unique_ptr< MealBuilder1> create(const MEAL1_BUILDERS& type);
 				};
 
 				//Concrete Builder for a Burger Meal which has a burger, fries and a drink
-				class BurgerMeal : public MealBuilder
+				class BurgerMeal1 : public MealBuilder1
 				{
 				public:
-					BurgerMeal();
+					BurgerMeal1();
 					void cookEntree();
 					void cookSide();
 					void fillDrink();
@@ -125,20 +141,36 @@ namespace za
 
 
 				//Concrete Builder for a Hotdog Meal which has a hotdog, salad and a drink
-				class HotdogMeal : public MealBuilder
+				class HotdogMeal1 : public MealBuilder1
 				{
 				public:
-					HotdogMeal();
+					HotdogMeal1();
 					void cookEntree();
 					void cookSide();
 					void fillDrink();
 				};
-#pragma endregion Builders
-#pragma endregion Example1
-#pragma region Example2
-#pragma region Email
 
-				class Email
+				static std::ostream& operator<<(std::ostream& os, const MealBuilder1::MEAL1_BUILDERS type)
+				{
+					switch (type)
+					{
+					case MealBuilder1::MEAL1_BUILDERS::BURGER1:
+						return os << "Burger1";
+
+					case MealBuilder1::MEAL1_BUILDERS::HOTDOG1:
+						return os << "Hotdog1";
+					}
+					return os;
+				}
+#pragma endregion Builder1
+
+#pragma endregion Example1
+
+#pragma region Example2
+
+#pragma region Product2
+
+				class Email2
 				{
 
 				public:
@@ -157,15 +189,16 @@ namespace za
 
 				};
 
-#pragma endregion Email
-#pragma region EmailBuilder
-				class EmailBuilder 
+#pragma endregion Product2
+
+#pragma region Builder2
+				class EmailBuilder2 
 				{
 				public:
 
-					EmailBuilder();
+					EmailBuilder2();
 
-					~EmailBuilder();
+					~EmailBuilder2();
 
 					void setSender(const std::string& sender);
 
@@ -175,22 +208,21 @@ namespace za
 
 					void setBody(const std::string& body);
 
-					Email* getEmail();
+					std::shared_ptr <Email2> getEmail();
 
 				private:
-					std::unique_ptr<Email> _email;
-					//Email* _email;
-					//Email* _email;
+					std::unique_ptr<Email2> _email;
+
 				};
-#pragma endregion EmailBuilder
+#pragma endregion Builder2
 
 #pragma endregion Example2
 
 #pragma region Example3
 
-#pragma region Product 
+#pragma region Product3 
 
-				class Pizza 
+				class Pizza3 
 				{
 				public:
 					void setDough(const std::string& dough);
@@ -202,54 +234,66 @@ namespace za
 					std::string _sauce;
 					std::string _topping;
 				};
-#pragma endregion Product 
+#pragma endregion Product3 
 
-#pragma region Builders
-				class PizzaBuilder 
+#pragma region Builder3
+				class PizzaBuilder3 
 				{
 				public:
-					virtual ~PizzaBuilder() = default;
-					void createNewPizza();
-					Pizza* getPizza();
+					enum class PIZZA3_BUILDERS
+					{
+						HAWAIIAN3,
+						SPICY3
+					};
+					virtual ~PizzaBuilder3() = default;
+					PizzaBuilder3();
+					
+					std::shared_ptr <Pizza3> getPizza();
 					virtual void buildDough() = 0;
 					virtual void buildSauce() = 0;
 					virtual void buildTopping() = 0;
+					static std::unique_ptr< PizzaBuilder3> create(const PIZZA3_BUILDERS& type);
 				protected:
-					std::unique_ptr<Pizza> _pizza;
+					std::unique_ptr<Pizza3> _pizza;
 				};
 
-				class HawaiianPizzaBuilder :public PizzaBuilder 
+				class HawaiianPizzaBuilder3 :public PizzaBuilder3 
 				{
 				public:
-					~HawaiianPizzaBuilder() override = default;
+					~HawaiianPizzaBuilder3() override = default;
 					void buildDough() override;
 					void buildSauce() override;
 					void buildTopping() override;
 				};
 
-				class SpicyPizzaBuilder :public PizzaBuilder 
+				class SpicyPizzaBuilder3 :public PizzaBuilder3 
 				{
 				public:
-					~SpicyPizzaBuilder() override = default;
+					~SpicyPizzaBuilder3() override = default;
 					void buildDough() override;
 					void buildSauce() override;
 					void buildTopping() override;
 				};
-#pragma endregion Builders
 
-#pragma region Manager
-				class Cook 
+				static std::ostream& operator<<(std::ostream& os, const PizzaBuilder3::PIZZA3_BUILDERS type)
 				{
-				public:
-					void openPizza() const;
-					void createPizza(PizzaBuilder* pizzaBuilder);
-				private:
-					PizzaBuilder* _pizzaBuilder;
-				};
-#pragma endregion Manager
+					switch (type)
+					{
+					case PizzaBuilder3::PIZZA3_BUILDERS::HAWAIIAN3:
+						return os << "Hawaiian3";
+
+					case PizzaBuilder3::PIZZA3_BUILDERS::SPICY3:
+						return os << "Spicy";
+					}
+					return os;
+				}
+
+#pragma endregion Builder3
 
 #pragma endregion Example3
+
 #pragma region Example4
+
 #pragma region Product4 
 				class Burger4 
 				{
@@ -289,62 +333,16 @@ namespace za
 
 					void setVegetables(const std::string& vegetables);
 
-					Burger4* getBurger();
+					std::shared_ptr<Burger4> getBurger();
+
 
 				private:
 					std::unique_ptr<Burger4> __burger;
-					//Burger* _burger;
 				};
 
 #pragma endregion Builder4
+
 #pragma endregion Example4
-#pragma region Example5
-#pragma region Product5
-
-				class Computer 
-				{
-				public:
-					void setCPU(std::string cpu);
-					void setMotherboard(std::string motherboard);
-					void setRAM(int ram);
-					void setStorage(int storage);
-					void setHasWifi(bool hasWifi);
-					void setHasBluetooth(bool hasBluetooth);
-					void setHasTouchscreen(bool hasTouchscreen);
-					void showFeatures();
-				private:
-					std::string _cpu;
-					std::string _motherboard;
-					int _ram;
-					int _storage;
-					bool _hasWifi;
-					bool _hasBluetooth;
-					bool _hasTouchscreen;
-					
-				};
-#pragma endregion Product5
-#pragma region Builder5
-				class ComputerBuilder 
-				{
-				public:
-					void createNewComputer();
-					void addCPU(std::string cpu);
-					void addMotherboard(std::string motherboard);
-					void addRAM(int ram);
-					void addStorage(int storage);
-					void addWifi();
-					void addBluetooth();
-					void addTouchscreen();
-					Computer* getComputer();
-				private:
-					Computer* m_computer;
-
-					std::unique_ptr<Computer> _computer;
-				};
-
-#pragma endregion Builder5
-
-#pragma endregion Example5
 
 			}
 		}
