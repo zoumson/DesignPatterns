@@ -13,68 +13,196 @@ namespace za
 		{
 			namespace af
 			{
+#pragma region Example1
+#pragma region Interface11
+#pragma endregion Interface11
+#pragma region Product11
 
-					GasCarDoor::GasCarDoor()
-					{
-						std::cout << "Making a door for a gas car." << std::endl;
-					};
-					void GasCarDoor::Open()
-					{
-						std::cout << "click" << std::endl;
-					};
+				GasCarDoor::GasCarDoor()
+				{
+					std::cout << "Making a door for a gas car." << std::endl;
+				};
+				void GasCarDoor::Open()
+				{
+					std::cout << "click" << std::endl;
+				};
 
-					ElectricCarDoor::ElectricCarDoor()
+				ElectricCarDoor::ElectricCarDoor()
+				{
+					std::cout << "Making a door for an electric car" << std::endl;
+				};
+				void ElectricCarDoor::Open()
+				{
+					std::cout << "shhhhh" << std::endl;
+				};
+#pragma endregion Product11
+#pragma region Interface12
+
+				Engine::Engine()
+				{
+					strcpy_s(_sound, "");
+				};
+
+#pragma endregion Interface12
+#pragma region Product12
+
+				GasEngine::GasEngine()
+				{
+					strcpy_s(_sound, "vroom");
+					std::cout << "Making a gas engine." << std::endl;
+				};
+				void GasEngine::Run()
+				{
+					std::cout << _sound << std::endl;
+				};
+
+				ElectricEngine::ElectricEngine()
+				{
+					strcpy_s(_sound, "SHHHH");
+					std::cout << "Making an electric engine." << std::endl;
+				};
+				void ElectricEngine::Run()
+				{
+					std::cout << _sound << std::endl;
+				};
+#pragma endregion Product12
+#pragma region Factory1
+				//Factories
+
+				std::unique_ptr<Door> GasCarFactory::BuildDoor()
+				{
+					return std::make_unique<GasCarDoor>();
+				};
+				std::unique_ptr<Engine> GasCarFactory::BuildEngine()
+				{
+					return std::make_unique<GasEngine>();
+				};
+
+				std::unique_ptr<Door> ElectricCarFactory::BuildDoor()
+				{
+					return std::make_unique<ElectricCarDoor>();
+				};
+				std::unique_ptr<Engine> ElectricCarFactory::BuildEngine()
+				{
+					return std::make_unique<ElectricEngine>();
+				};
+				std::unique_ptr<CarFactory> CarFactory::create(const CarFactory::CAR_FACTORIES& type)
+				{
+					switch (type)
 					{
-						std::cout << "Making a door for an electric car" << std::endl;
-					};
-					void ElectricCarDoor::Open()
-					{
-						std::cout << "shhhhh" << std::endl;
-					};
+					case CarFactory::CAR_FACTORIES::GAS1:
+						return std::make_unique<GasCarFactory>();
+
+					case CarFactory::CAR_FACTORIES::ELECTRIC1:
+						return std::make_unique<ElectricCarFactory>();
+					}
+					return nullptr;
+				}
+#pragma endregion Factory1
+#pragma region User1
+				void buildCar(CarFactory& factory)
+				{
+					auto myDoor = factory.BuildDoor();
+					auto myEngine = factory.BuildEngine();
+
+					myDoor->Open();
+					myEngine->Run();
+				}
+#pragma endregion User1
+
+#pragma endregion Example1
 
 
-					Engine::Engine()
-					{
-						strcpy_s(_sound, "");
-					};
+#pragma region Example2
 
-					GasEngine::GasEngine()
-					{
-						strcpy_s(_sound, "vroom");
-						std::cout << "Making a gas engine." << std::endl;
-					};
-					void GasEngine::Run()
-					{
-						std::cout << _sound << std::endl;
-					};
+#pragma region Interface21
 
-					ElectricEngine::ElectricEngine()
-					{
-						strcpy_s(_sound, "SHHHH");
-						std::cout << "Making an electric engine." << std::endl;
-					};
-					void ElectricEngine::Run()
-					{
-						std::cout << _sound << std::endl;
-					};
+#pragma endregion Interface21
 
-					Door* GasCarFactory::BuildDoor()
-					{
-						return new GasCarDoor();
-					};
-					Engine* GasCarFactory::BuildEngine()
-					{
-						return new GasEngine();
-					};
+#pragma region Product21
+				void ConcreteProductA21::info()
+				{
+					std::cout << "This is a ConcreteProductA21.\n";
+				}				
+				void ConcreteProductA22::info()
+				{
+					std::cout << "This is a ConcreteProductA22.\n";
+				}
 
-					Door* ElectricCarFactory::BuildDoor()
-					{
-						return new ElectricCarDoor();
-					};
-					Engine* ElectricCarFactory::BuildEngine()
-					{
-						return new ElectricEngine();
-					};
+
+#pragma endregion Product21
+
+#pragma region Interface22
+
+#pragma endregion Interface22
+
+#pragma region Product22
+
+				void ConcreteProductB21::info()
+				{
+					std::cout << "This is a ConcreteProductB21.\n";
+				}
+				void ConcreteProductB22::info()
+				{
+					std::cout << "This is a ConcreteProductB22.\n";
+				}
+			 
+#pragma endregion Product22
+
+		
+
+#pragma region Factory2
+				std::unique_ptr<ProductA2> ConcreteFactory21::createProductA()
+				{
+					return std::make_unique<ConcreteProductA21>();
+				}
+								
+				std::unique_ptr<ProductB2> ConcreteFactory21::createProductB()
+				{
+					return std::make_unique<ConcreteProductB21>();
+				}
+								
+				
+				std::unique_ptr<ProductA2> ConcreteFactory22::createProductA()
+				{
+					return std::make_unique<ConcreteProductA22>();
+				}
+								
+				std::unique_ptr<ProductB2> ConcreteFactory22::createProductB()
+				{
+					return std::make_unique<ConcreteProductB22>();
+				}
+
+
+				std::unique_ptr<AbstractFactory2> AbstractFactory2::create(const AbstractFactory2::PRODUCT2_FACTORIES& type)
+				{
+
+						switch (type)
+						{
+						case AbstractFactory2::PRODUCT2_FACTORIES::PRODUCT2_1:
+							return std::make_unique<ConcreteFactory21>();
+
+						case AbstractFactory2::PRODUCT2_FACTORIES::PRODUCT2_2:
+							return std::make_unique< ConcreteFactory22>();
+						}
+						return nullptr;
+
+				};
+#pragma endregion Factory2
+#pragma region User2
+				void buildProduct2(AbstractFactory2& factory)
+				{
+					auto productA = factory.createProductA();
+					auto productB = factory.createProductB();
+					productA->info();
+					productB->info();
+
+				}
+#pragma endregion User2
+
+
+#pragma endregion Example2
+
 
 
 #pragma region Example3
@@ -124,59 +252,85 @@ namespace za
 
 #pragma region Factory3
 
-					std::unique_ptr<APhoneFactory> APhoneFactory::CreateFactory(APhoneFactory::PHONE_FACTORIES factory)
-					{
-						if (factory == PHONE_FACTORIES::SAMSUNG)
-						{
-							return std::make_unique<SamsungFactory>();
-						}
-						else if (factory == PHONE_FACTORIES::HTC)
-						{
-							return std::make_unique<HTCFactory>();
-						}
-						else if (factory == PHONE_FACTORIES::NOKIA)
-						{
-							return std::make_unique<NokiaFactory>();
-						}
+					//std::unique_ptr<APhoneFactory> APhoneFactory::create(APhoneFactory::PHONE_FACTORIES factory)
+					//{
+					//	if (factory == PHONE_FACTORIES::SAMSUNG)
+					//	{
+					//		return std::make_unique<SamsungFactory>();
+					//	}
+					//	else if (factory == PHONE_FACTORIES::HTC)
+					//	{
+					//		return std::make_unique<HTCFactory>();
+					//	}
+					//	else if (factory == PHONE_FACTORIES::NOKIA)
+					//	{
+					//		return std::make_unique<NokiaFactory>();
+					//	}
 
-						return nullptr;
-					}
-	
-					std::unique_ptr<ISmart> SamsungFactory::GetSmart()
+					//	return nullptr;
+					//}
+					//createSmart
+					//createDumb
+					std::unique_ptr<ISmart> SamsungFactory::createSmart()
 					{
 						return std::make_unique<GalaxyS2>();
 					}
 					
-					std::unique_ptr<IDumb> SamsungFactory::GetDumb()
+					std::unique_ptr<IDumb> SamsungFactory::createDumb()
 					{
 						return std::make_unique<Primo>();
 
 					}	
 
-					std::unique_ptr<ISmart> HTCFactory::GetSmart()
+					std::unique_ptr<ISmart> HTCFactory::createSmart()
 					{
 						return std::make_unique<Titan>();
 					}
 					
-					std::unique_ptr<IDumb> HTCFactory::GetDumb()
+					std::unique_ptr<IDumb> HTCFactory::createDumb()
 					{
 						return std::make_unique<Genie>();
 
 					}
 
-					std::unique_ptr<ISmart> NokiaFactory::GetSmart()
+					std::unique_ptr<ISmart> NokiaFactory::createSmart()
 					{
 						return std::make_unique<Lumia>();
 					}
 					
-					std::unique_ptr<IDumb> NokiaFactory::GetDumb()
+					std::unique_ptr<IDumb> NokiaFactory::createDumb()
 					{
 						return std::make_unique<Asha>();
 
 					}
+					std::unique_ptr<APhoneFactory> APhoneFactory::create(const APhoneFactory::PHONE_FACTORIES& type)
+					{
+						switch (type)
+						{
+						case APhoneFactory::PHONE_FACTORIES::HTC:
+							return std::make_unique<HTCFactory>();						
+						
+						case APhoneFactory::PHONE_FACTORIES::NOKIA:
+							return std::make_unique<NokiaFactory>();	
 
+						case APhoneFactory::PHONE_FACTORIES::SAMSUNG:
+							return std::make_unique<SamsungFactory>();	
+						}
+
+						return nullptr;
+					}
 #pragma endregion Factory3
+#pragma region User3
+					void buildPhone(APhoneFactory& factory)
+					{
 
+						auto myDumb = factory.createDumb();
+						auto mySmart = factory.createSmart();
+						std::cout << "Dumb phone " << myDumb->Name() << "\n";
+						std::cout << "Smart phone " << mySmart->Name() << "\n";
+
+					}
+#pragma endregion User3
 #pragma endregion Example3
 
 #pragma region Example4
@@ -265,7 +419,7 @@ namespace za
 #pragma endregion Factory4
 #pragma region User4
 					/* User code */
-					void buildInterface(GUIFactory4& factory) 
+					void buildGUI(GUIFactory4& factory)
 					{
 						auto frame = factory.createFrame();
 						auto button = factory.createButton();
@@ -364,7 +518,7 @@ namespace za
 #pragma endregion Factory5
 #pragma region User5
 					/* User code */
-					void client5(ThemeFactory5& factory)
+					void buildTheme(ThemeFactory5& factory)
 					{
 						auto bg = factory.createBg();
 						auto txt = factory.createTxt();

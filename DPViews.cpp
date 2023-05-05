@@ -460,82 +460,37 @@ namespace za
 					using namespace za::dp::creational::af;
 					auto example1 = [&]()
 					{
-
-
-						CarFactory* CarPlant;
-						int choice;
-
-						std::cout << "Select a car type: " << std::endl;
-						std::cout << "1: Gasoline" << std::endl;
-						std::cout << "2: Electric" << std::endl;
-						std::cout << "Selection: ";
-						std::cin >> choice;
-						std::cout << std::endl;
-
-						switch (choice)
-						{
-						case 1:
-							CarPlant = new GasCarFactory;
-							break;
-						case 2:
-							CarPlant = new ElectricCarFactory;
-							break;
-						default:
-							std::cout << "Invalid Selection" << std::endl;
-							CarPlant = nullptr;
-							break;
-						}
-
-						if (CarPlant != nullptr)
-						{
-							Door* myDoor = CarPlant->BuildDoor();
-							Engine* myEngine = CarPlant->BuildEngine();
-
-							myDoor->Open();
-							myEngine->Run();
-						}
+						auto carFactory = CarFactory::create(CarFactory::CAR_FACTORIES::GAS1);
+						buildCar(*carFactory);
 					};
 					auto example2 = [&]()
 					{
+						auto product2Factory2 = AbstractFactory2::create(AbstractFactory2::PRODUCT2_FACTORIES::PRODUCT2_1);
+						buildProduct2(*product2Factory2);
+
 					};					
 					auto example3 = [&]()
 					{
-						std::unique_ptr<APhoneFactory> factory3 = APhoneFactory::CreateFactory(APhoneFactory::PHONE_FACTORIES::SAMSUNG);
-
-						std::cout << "Dumb phone from Samsung: " << factory3->GetDumb()->Name() << "\n";
-						
-						std::cout << "Smart phone from Samsung: " << factory3->GetSmart()->Name() << "\n";
-
-
-						factory3 = APhoneFactory::CreateFactory(APhoneFactory::PHONE_FACTORIES::HTC);
-
-						std::cout << "Dumb phone from HTC: " << factory3->GetDumb()->Name() << "\n";
-		
-						std::cout << "Smart phone from HTC: " << factory3->GetSmart()->Name() << "\n";
-
-
-						factory3 = APhoneFactory::CreateFactory(APhoneFactory::PHONE_FACTORIES::NOKIA);
-
-						std::cout << "Dumb phone from Nokia: " << factory3->GetDumb()->Name() << "\n";
-
+						auto phoneFactory = APhoneFactory::create(APhoneFactory::PHONE_FACTORIES::SAMSUNG);
+						buildPhone(*phoneFactory);
 
 					};
 					auto example4 = [&]()
 					{
 						auto guiFactory = GUIFactory4::create(GUIFactory4::GUI_FACTORIES::LINUX4);
-						buildInterface(*guiFactory);
+						buildGUI(*guiFactory);
 					};
 					auto example5 = [&]()
 					{
-						auto factory5 = ThemeFactory5::create(ThemeFactory5::THEME_FACTORIES::DARK5);
-						client5(*factory5);
+						auto themeFactory = ThemeFactory5::create(ThemeFactory5::THEME_FACTORIES::DARK5);
+						buildTheme(*themeFactory);
 					};
 					//
 					//example1();
 					//example2();
 					//example3();
-					//example4();
-					example5();
+					example4();
+					//example5();
 				}
 				void builder()
 				{

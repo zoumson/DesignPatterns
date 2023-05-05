@@ -16,6 +16,7 @@ namespace za
 			namespace af
 			{
 #pragma region Example1
+#pragma region Interface11
 				//Door Objects
 				class Door
 				{
@@ -25,12 +26,13 @@ namespace za
 					};
 					virtual void Open() = 0;
 				};
-
+#pragma endregion Interface11
+#pragma region Product11
 				class GasCarDoor : public Door
 				{
 				public:
 					GasCarDoor();
-					void Open();
+					void Open() override;
 		
 				};
 
@@ -38,9 +40,10 @@ namespace za
 				{
 				public:
 					ElectricCarDoor();
-					void Open();
+					void Open() override;
 				};
-
+#pragma endregion Product11
+#pragma region Interface12
 				//Engine objects
 				class Engine
 				{
@@ -50,43 +53,57 @@ namespace za
 					Engine();
 					virtual void Run() = 0;
 				};
-
+#pragma endregion Interface12
+#pragma region Product12
 				class GasEngine : public Engine
 				{
 				public:
 					GasEngine();
-					void Run();
+					void Run() override;
 				};
 
 				class ElectricEngine : public Engine
 				{
 				public:
 					ElectricEngine();
-					void Run();
+					void Run() override;
 				};
-
+#pragma endregion Product12
+#pragma region Factory1
 				//Factories
 				class CarFactory
 				{
 				public:
-					virtual Door* BuildDoor() = 0;
-					virtual Engine* BuildEngine() = 0;
+					enum class CAR_FACTORIES
+					{
+						GAS1,
+						ELECTRIC1
+					};
+					virtual std::unique_ptr<Door> BuildDoor() = 0;
+					virtual std::unique_ptr<Engine> BuildEngine() = 0;
+					static std::unique_ptr<CarFactory> create(const CAR_FACTORIES& factory);
 				};
 
 				class GasCarFactory :public CarFactory
 				{
 				public:
-					Door* BuildDoor();
-					Engine* BuildEngine();
+					std::unique_ptr<Door> BuildDoor() override;
+					std::unique_ptr<Engine> BuildEngine()override;
 				};
 
 				class ElectricCarFactory :public CarFactory
 				{
 				public:
-					Door* BuildDoor();
-					Engine* BuildEngine();
+					std::unique_ptr<Door> BuildDoor() override;
+					std::unique_ptr<Engine> BuildEngine()override;
 				};
+#pragma endregion Factory1
+#pragma region User1
+				void buildCar(CarFactory& factory);
+#pragma endregion User1
+
 #pragma endregion Example1
+
 #pragma region Example2
 
 #pragma region Interface21
@@ -99,7 +116,7 @@ namespace za
 #pragma endregion Interface21
 
 #pragma region Product21
-				class ConcreteProductA12 : public ProductA2
+				class ConcreteProductA21 : public ProductA2
 				{
 				public:
 					void info() override;
@@ -124,7 +141,7 @@ namespace za
 #pragma endregion Interface22
 
 #pragma region Product22
-				class ConcreteProductB12 : public ProductB2 
+				class ConcreteProductB21 : public ProductB2 
 				{
 				public:
 					void info() override;
@@ -143,11 +160,17 @@ namespace za
 				class AbstractFactory2 
 				{
 				public:
+					enum class PRODUCT2_FACTORIES
+					{
+						PRODUCT2_1,
+						PRODUCT2_2
+					};
 					virtual std::unique_ptr<ProductA2> createProductA() = 0;
 					virtual std::unique_ptr<ProductB2> createProductB() = 0;
+					static std::unique_ptr<AbstractFactory2> create(const PRODUCT2_FACTORIES& type);
 				};
 
-				class ConcreteFactory12 : public AbstractFactory2 
+				class ConcreteFactory21 : public AbstractFactory2 
 				{
 				public:
 					std::unique_ptr<ProductA2> createProductA() override;
@@ -163,9 +186,13 @@ namespace za
 
 
 #pragma endregion Factory2
+#pragma region User2
+				void buildProduct2(AbstractFactory2& factory);
+#pragma endregion User2
 
 
 #pragma endregion Example2
+
 #pragma region Example3
 #pragma region Interface31
 				class IDumb
@@ -241,34 +268,37 @@ namespace za
 						NOKIA
 					};
 
-					virtual std::unique_ptr<ISmart> GetSmart() = 0;
-					virtual std::unique_ptr<IDumb> GetDumb() = 0;
+					virtual std::unique_ptr<ISmart> createSmart() = 0;
+					virtual std::unique_ptr<IDumb> createDumb() = 0;
 
-					static std::unique_ptr<APhoneFactory> CreateFactory(PHONE_FACTORIES factory);
+					static std::unique_ptr<APhoneFactory> create(const PHONE_FACTORIES& type);
 				};
 
 				class SamsungFactory : public APhoneFactory
 				{
 				public:
-					std::unique_ptr<ISmart> GetSmart() override;
-					std::unique_ptr<IDumb> GetDumb() override;
+					std::unique_ptr<ISmart> createSmart() override;
+					std::unique_ptr<IDumb> createDumb() override;
 				};
 
 				class HTCFactory : public APhoneFactory
 				{
 				public:
-					std::unique_ptr<ISmart> GetSmart() override;
-					std::unique_ptr<IDumb> GetDumb() override;
+					std::unique_ptr<ISmart> createSmart() override;
+					std::unique_ptr<IDumb> createDumb() override;
 				};
 
 				class NokiaFactory : public APhoneFactory
 				{
 				public:
-					std::unique_ptr<ISmart> GetSmart() override;
-					std::unique_ptr<IDumb> GetDumb() override;
+					std::unique_ptr<ISmart> createSmart() override;
+					std::unique_ptr<IDumb> createDumb() override;
 				};
 #pragma endregion Factory3
 
+#pragma region User3
+				void buildPhone(APhoneFactory& factory);
+#pragma endregion User3
 #pragma endregion Example3
 
 #pragma region Example4
@@ -357,7 +387,7 @@ namespace za
 #pragma endregion Factory4
 #pragma region User4
 				/* User code */
-				void buildInterface(GUIFactory4& factory);
+				void buildGUI(GUIFactory4& factory);
 #pragma endregion User4
 
 #pragma endregion Example4
@@ -450,7 +480,7 @@ namespace za
 #pragma endregion Factory5
 #pragma region User5
 				/* User code */
-				void client5(ThemeFactory5& factory);
+				void buildTheme(ThemeFactory5& factory);
 #pragma endregion User5
 
 #pragma endregion Example5
