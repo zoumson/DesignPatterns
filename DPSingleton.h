@@ -4,8 +4,11 @@
 /*
 * Creational Pattern
 5. Singleton
-
-
+only one insatnce of the class
+only used for logging 
+Not thread safe
+sol: lazy initialization
+lock the section  of creating the instance
 */
 
 namespace za

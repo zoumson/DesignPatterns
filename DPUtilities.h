@@ -3,6 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <regex>
+#include <utility>
+#include <memory>
+#include <stdexcept>
 
 namespace za
 {

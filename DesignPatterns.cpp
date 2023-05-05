@@ -5,7 +5,7 @@
 
 int main()
 {
-    size_t testNumber = 20;
+    size_t testNumber = 17;
 
 
 	switch (testNumber)

@@ -7,6 +7,11 @@
 a. Separate construction of complex objects
 b. Build a complex object one step at a time
 c. Same construction process for different representations
+d. Create an instance without setting arguments
+e. Do not call/expose constructor with all arguments
+f. Setter to set argument one at a time
+g. Set optional argument when enabled
+h. Get the object/instance once build is done
 
 */
 
@@ -18,6 +23,7 @@ namespace za
 		{
 			namespace bui
 			{
+#pragma region Example1
 #pragma region Entrees
 				// Base Entree class
 				class Entree
@@ -128,6 +134,218 @@ namespace za
 					void fillDrink();
 				};
 #pragma endregion Builders
+#pragma endregion Example1
+#pragma region Example2
+#pragma region Email
+
+				class Email
+				{
+
+				public:
+					void setSender(const std::string& sender);
+					void setRecipient(const std::string& recipient);
+					void setSubject(const std::string& subject);
+					void setBody(const std::string& body);
+					void showEmail();
+
+
+				private:
+					std::string _sender;
+					std::string _recipient;
+					std::string _subject;
+					std::string _body;
+
+				};
+
+#pragma endregion Email
+#pragma region EmailBuilder
+				class EmailBuilder 
+				{
+				public:
+
+					EmailBuilder();
+
+					~EmailBuilder();
+
+					void setSender(const std::string& sender);
+
+					void setRecipient(const std::string& recipient);
+
+					void setSubject(const std::string& subject);
+
+					void setBody(const std::string& body);
+
+					Email* getEmail();
+
+				private:
+					std::unique_ptr<Email> _email;
+					//Email* _email;
+					//Email* _email;
+				};
+#pragma endregion EmailBuilder
+
+#pragma endregion Example2
+
+#pragma region Example3
+
+#pragma region Product 
+
+				class Pizza 
+				{
+				public:
+					void setDough(const std::string& dough);
+					void setSauce(const std::string& sauce);
+					void setTopping(const std::string& topping);
+					void open() const;
+				private:
+					std::string _dough;
+					std::string _sauce;
+					std::string _topping;
+				};
+#pragma endregion Product 
+
+#pragma region Builders
+				class PizzaBuilder 
+				{
+				public:
+					virtual ~PizzaBuilder() = default;
+					void createNewPizza();
+					Pizza* getPizza();
+					virtual void buildDough() = 0;
+					virtual void buildSauce() = 0;
+					virtual void buildTopping() = 0;
+				protected:
+					std::unique_ptr<Pizza> _pizza;
+				};
+
+				class HawaiianPizzaBuilder :public PizzaBuilder 
+				{
+				public:
+					~HawaiianPizzaBuilder() override = default;
+					void buildDough() override;
+					void buildSauce() override;
+					void buildTopping() override;
+				};
+
+				class SpicyPizzaBuilder :public PizzaBuilder 
+				{
+				public:
+					~SpicyPizzaBuilder() override = default;
+					void buildDough() override;
+					void buildSauce() override;
+					void buildTopping() override;
+				};
+#pragma endregion Builders
+
+#pragma region Manager
+				class Cook 
+				{
+				public:
+					void openPizza() const;
+					void createPizza(PizzaBuilder* pizzaBuilder);
+				private:
+					PizzaBuilder* _pizzaBuilder;
+				};
+#pragma endregion Manager
+
+#pragma endregion Example3
+#pragma region Example4
+#pragma region Product4 
+				class Burger4 
+				{
+				public:
+					void setBread(const std::string& bread);
+
+					void setMeat(const std::string& meat);
+
+					void setCheese(const std::string& cheese);
+
+					void setVegetables(const std::string& vegetables);
+
+					void showBurger();
+
+				private:
+					std::string __bread;
+					std::string __meat;
+					std::string __cheese;
+					std::string __vegetables;
+				};
+
+#pragma endregion Product4 
+
+#pragma region Builder4
+				class BurgerBuilder4 
+				{
+				public:
+					BurgerBuilder4();
+
+					~BurgerBuilder4();
+
+					void setBread(const std::string& bread);
+
+					void setMeat(const std::string& meat);
+
+					void setCheese(const std::string& cheese);
+
+					void setVegetables(const std::string& vegetables);
+
+					Burger4* getBurger();
+
+				private:
+					std::unique_ptr<Burger4> __burger;
+					//Burger* _burger;
+				};
+
+#pragma endregion Builder4
+#pragma endregion Example4
+#pragma region Example5
+#pragma region Product5
+
+				class Computer 
+				{
+				public:
+					void setCPU(std::string cpu);
+					void setMotherboard(std::string motherboard);
+					void setRAM(int ram);
+					void setStorage(int storage);
+					void setHasWifi(bool hasWifi);
+					void setHasBluetooth(bool hasBluetooth);
+					void setHasTouchscreen(bool hasTouchscreen);
+					void showFeatures();
+				private:
+					std::string _cpu;
+					std::string _motherboard;
+					int _ram;
+					int _storage;
+					bool _hasWifi;
+					bool _hasBluetooth;
+					bool _hasTouchscreen;
+					
+				};
+#pragma endregion Product5
+#pragma region Builder5
+				class ComputerBuilder 
+				{
+				public:
+					void createNewComputer();
+					void addCPU(std::string cpu);
+					void addMotherboard(std::string motherboard);
+					void addRAM(int ram);
+					void addStorage(int storage);
+					void addWifi();
+					void addBluetooth();
+					void addTouchscreen();
+					Computer* getComputer();
+				private:
+					Computer* m_computer;
+
+					std::unique_ptr<Computer> _computer;
+				};
+
+#pragma endregion Builder5
+
+#pragma endregion Example5
+
 			}
 		}
 	}
