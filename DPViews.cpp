@@ -529,34 +529,90 @@ namespace za
 				
 				void prototypee()
 				{
-					//create initial instance of a Sheep
-					za::dp::creational::pro::Sheep* sheep0 = new za::dp::creational::pro::Sheep;
-					sheep0->setHairColor("white");
-					sheep0->setTail(5);
-					sheep0->setWeight(90);
-					sheep0->setHeight(1);
-					sheep0->setAge(5);
+					using namespace za::dp::creational::pro;
+					auto example1 = [&]()
+					{
 
-					//create initial instance of a Cow
-					za::dp::creational::pro::Cow* cow0 = new za::dp::creational::pro::Cow;
-					cow0->setHairColor("brown");
-					cow0->setTail(20);
-					cow0->setWeight(790);
-					cow0->setHeight(2);
-					cow0->setAge(8);
 
-					za::dp::creational::pro::Animal* farm[3];
+						//create initial instance of a Sheep
+						Sheep* sheep0 = new Sheep;
+						sheep0->setHairColor("white");
+						sheep0->setTail(5);
+						sheep0->setWeight(90);
+						sheep0->setHeight(1);
+						sheep0->setAge(5);
 
-					//use cloning to populate the farm
-					farm[0] = sheep0->clone();
-					farm[1] = cow0->clone();
+						//create initial instance of a Cow
+						Cow* cow0 = new Cow;
+						cow0->setHairColor("brown");
+						cow0->setTail(20);
+						cow0->setWeight(790);
+						cow0->setHeight(2);
+						cow0->setAge(8);
 
-					//change a cow property
-					farm[1]->setWeight(1000);
+						Animal* farm[3];
 
-					//shear a Sheep and clone it
-					sheep0->shearing();
-					farm[2] = sheep0->clone();
+						//use cloning to populate the farm
+						farm[0] = sheep0->clone();
+						farm[1] = cow0->clone();
+
+						//change a cow property
+						farm[1]->setWeight(1000);
+
+						//shear a Sheep and clone it
+						sheep0->shearing();
+						farm[2] = sheep0->clone();
+					};					
+					auto example2 = [&]()
+					{
+						RecordFactory recordFactory;
+
+						auto record = recordFactory.create(RecordFactory::RECORD_TYPES::CAR);
+						record->print();
+
+						record = recordFactory.create(RecordFactory::RECORD_TYPES::BIKE);
+						record->print();
+
+						record = recordFactory.create(RecordFactory::RECORD_TYPES::PERSON);
+						record->print();
+					};
+					auto example3 = [&]()
+					{
+						ObjectFactory3::initialize();
+						Prototype3* object3;
+
+						/* All the object were created by cloning the prototypes. */
+						object3 = ObjectFactory3::getType1Value1();
+						std::cout << object3->getType() << ": " << object3->getValue() << std::endl;
+
+						object3 = ObjectFactory3::getType1Value2();
+						std::cout << object3->getType() << ": " << object3->getValue() << std::endl;
+
+						object3 = ObjectFactory3::getType2Value1();
+						std::cout << object3->getType() << ": " << object3->getValue() << std::endl;
+
+						object3 = ObjectFactory3::getType2Value2();
+						std::cout << object3->getType() << ": " << object3->getValue() << std::endl;
+					};
+					auto example4 = [&]()
+					{
+						auto jane = EmployeeFactory::NewMainOfficeEmployee("Jane Doe", 125);
+						auto jack = EmployeeFactory::NewAuxOfficeEmployee("jack Doe", 123);
+
+						std::cout << *jane << std::endl << *jack << std::endl;
+					};					
+					auto example5 = [&]()
+					{
+						Dog5* dog5 = new Dog5;
+						who_am_i(dog5);
+						delete dog5;
+					};
+					//example1();
+					//example2();
+					//example3();
+					//example4();
+					example5();
+
 
 				}
 				void singleton()
@@ -573,3 +629,24 @@ namespace za
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

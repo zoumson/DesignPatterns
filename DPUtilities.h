@@ -6,6 +6,7 @@
 #include <utility>
 #include <memory>
 #include <stdexcept>
+#include <unordered_map>
 
 namespace za
 {
