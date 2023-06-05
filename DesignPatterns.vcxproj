@@ -128,11 +128,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DPAbstractFactory.cpp" />
+    <ClCompile Include="DPAdapter.cpp" />
+    <ClCompile Include="DPBridge.cpp" />
     <ClCompile Include="DPbuilder.cpp" />
     <ClCompile Include="DPChainOfResponsability.cpp" />
     <ClCompile Include="DesignPatterns.cpp" />
     <ClCompile Include="DPChainRespObserCmd.cpp" />
     <ClCompile Include="DPCommand.cpp" />
+    <ClCompile Include="DPComposite.cpp" />
+    <ClCompile Include="DPDecorator.cpp" />
+    <ClCompile Include="DPFacade.cpp" />
     <ClCompile Include="DPFactoryMethod.cpp" />
     <ClCompile Include="DPInterpreter.cpp" />
     <ClCompile Include="DPIterator.cpp" />
@@ -153,10 +158,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DPAbstractFactory.h" />
+    <ClInclude Include="DPAdapter.h" />
+    <ClInclude Include="DPBridge.h" />
     <ClInclude Include="DPbuilder.h" />
     <ClInclude Include="DPChainOfResponsability.h" />
     <ClInclude Include="DPChainRespObserCmd.h" />
     <ClInclude Include="DPCommand.h" />
+    <ClInclude Include="DPComposite.h" />
+    <ClInclude Include="DPDecorator.h" />
+    <ClInclude Include="DPFacade.h" />
     <ClInclude Include="DPFactoryMethod.h" />
     <ClInclude Include="DPInterpreter.h" />
     <ClInclude Include="DPIterator.h" />

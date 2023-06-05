@@ -19,6 +19,11 @@
 #include "DPBuilder.h"
 #include "DPPrototype.h"
 #include "DPSingleton.h"
+#include "DPAdapter.h"
+#include "DPFacade.h"
+#include "DPBridge.h"
+#include "DPComposite.h"
+#include "DPDecorator.h"
 namespace za
 {
 	namespace dp
@@ -47,6 +52,16 @@ namespace za
 				void builder();
 				void prototypee();
 				void singleton();
+			}
+			namespace structural
+			{
+				void adapter();
+				void bridge();
+				void composite();
+				void decorator();
+				void facade();
+				void flyweight();
+				void proxy();
 			}
 		}
 

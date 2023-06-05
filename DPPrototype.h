@@ -258,113 +258,113 @@ namespace za
 #pragma endregion Factory4
 
 #pragma endregion Example4
-
-#pragma region Example5
-
-#pragma region Interface5
-
-				// Prototype Design Pattern
-				//
-				// Intent: Lets you copy existing objects without making your code dependent on
-				// their classes.
-
-				enum Type 
-				{
-					PROTOTYPE_1 = 0,
-					PROTOTYPE_2
-				};
-
-				/**
-				 * The example class that has cloning ability. We'll see how the values of field
-				 * with different types will be cloned.
-				 */
-
-				class Prototype5 
-				{
-				protected:
-					std::string prototype_name_;
-					float prototype_field_;
-
-				public:
-					Prototype5() {}
-					Prototype5(std::string prototype_name);
-					virtual ~Prototype5() {};
-					virtual Prototype5* clone() const = 0;
-					virtual void method(float prototype_field);
-				};
-#pragma endregion Interface5
-
-#pragma region Product5
-				/**
-				 * ConcretePrototype1 is a Sub-Class of Prototype and implement the Clone Method
-				 * In this example all data members of Prototype Class are in the Stack. If you
-				 * have pointers in your properties for ex: String* name_ ,you will need to
-				 * implement the Copy-Constructor to make sure you have a deep copy from the
-				 * clone method
-				 */
-
-				class ConcretePrototype51 : public Prototype5 
-				{
-				private:
-					float concrete_prototype_field1_;
-
-				public:
-					ConcretePrototype51(std::string prototype_name, float concrete_prototype_field);
-					/**
-					 * Notice that Clone method return a Pointer to a new ConcretePrototype1
-					 * replica. so, the client (who call the clone method) has the responsability
-					 * to free that memory. I you have smart pointer knowledge you may prefer to
-					 * use unique_pointer here.
-					 */
-					Prototype5* clone() const override;
-				};
-
-				class ConcretePrototype52 : public Prototype5 
-				{
-				private:
-					float concrete_prototype_field2_;
-
-				public:
-					ConcretePrototype52(std::string prototype_name, float concrete_prototype_field);
-					Prototype5* clone() const override;
-				};
-#pragma endregion Product5
-
-#pragma region Factory5
-				/**
-				 * In PrototypeFactory you have two concrete prototypes, one for each concrete
-				 * prototype class, so each time you want to create a bullet , you can use the
-				 * existing ones and clone those.
-				 */
-
-				class PrototypeFactory5 
-				{
-				private:
-					std::unordered_map<Type, Prototype5*, std::hash<int>> prototypes_;
-
-				public:
-					PrototypeFactory5();
-					/**
-					 * Be carefull of free all memory allocated. Again, if you have smart pointers
-					 * knowelege will be better to use it here.
-					 */
-
-					~PrototypeFactory5();
-					/**
-					 * Notice here that you just need to specify the type of the prototype you
-					 * want and the method will create from the object with this type.
-					 */
-					Prototype5* create(Type type);
-				};
-
-#pragma endregion Factory5
-
-#pragma region User5
-
-				void user5(PrototypeFactory5& prototype_factory);
-#pragma endregion User5
-
-#pragma endregion Example5
+//
+//#pragma region Example5
+//
+//#pragma region Interface5
+//
+//				// Prototype Design Pattern
+//				//
+//				// Intent: Lets you copy existing objects without making your code dependent on
+//				// their classes.
+//
+//				enum Type 
+//				{
+//					PROTOTYPE_1 = 0,
+//					PROTOTYPE_2
+//				};
+//
+//				/**
+//				 * The example class that has cloning ability. We'll see how the values of field
+//				 * with different types will be cloned.
+//				 */
+//
+//				class Prototype5 
+//				{
+//				protected:
+//					std::string prototype_name_;
+//					float prototype_field_;
+//
+//				public:
+//					Prototype5() {}
+//					Prototype5(std::string prototype_name);
+//					virtual ~Prototype5() {};
+//					virtual Prototype5* clone() const = 0;
+//					virtual void method(float prototype_field);
+//				};
+//#pragma endregion Interface5
+//
+//#pragma region Product5
+//				/**
+//				 * ConcretePrototype1 is a Sub-Class of Prototype and implement the Clone Method
+//				 * In this example all data members of Prototype Class are in the Stack. If you
+//				 * have pointers in your properties for ex: String* name_ ,you will need to
+//				 * implement the Copy-Constructor to make sure you have a deep copy from the
+//				 * clone method
+//				 */
+//
+//				class ConcretePrototype51 : public Prototype5 
+//				{
+//				private:
+//					float concrete_prototype_field1_;
+//
+//				public:
+//					ConcretePrototype51(std::string prototype_name, float concrete_prototype_field);
+//					/**
+//					 * Notice that Clone method return a Pointer to a new ConcretePrototype1
+//					 * replica. so, the client (who call the clone method) has the responsability
+//					 * to free that memory. I you have smart pointer knowledge you may prefer to
+//					 * use unique_pointer here.
+//					 */
+//					Prototype5* clone() const override;
+//				};
+//
+//				class ConcretePrototype52 : public Prototype5 
+//				{
+//				private:
+//					float concrete_prototype_field2_;
+//
+//				public:
+//					ConcretePrototype52(std::string prototype_name, float concrete_prototype_field);
+//					Prototype5* clone() const override;
+//				};
+//#pragma endregion Product5
+//
+//#pragma region Factory5
+//				/**
+//				 * In PrototypeFactory you have two concrete prototypes, one for each concrete
+//				 * prototype class, so each time you want to create a bullet , you can use the
+//				 * existing ones and clone those.
+//				 */
+//
+//				class PrototypeFactory5 
+//				{
+//				private:
+//					std::unordered_map<Type, Prototype5*, std::hash<int>> prototypes_;
+//
+//				public:
+//					PrototypeFactory5();
+//					/**
+//					 * Be carefull of free all memory allocated. Again, if you have smart pointers
+//					 * knowelege will be better to use it here.
+//					 */
+//
+//					~PrototypeFactory5();
+//					/**
+//					 * Notice here that you just need to specify the type of the prototype you
+//					 * want and the method will create from the object with this type.
+//					 */
+//					Prototype5* create(Type type);
+//				};
+//
+//#pragma endregion Factory5
+//
+//#pragma region User5
+//
+//				void user5(PrototypeFactory5& prototype_factory);
+//#pragma endregion User5
+//
+//#pragma endregion Example5
 			}
 		}
 	}

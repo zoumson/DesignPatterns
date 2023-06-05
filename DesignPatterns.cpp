@@ -5,7 +5,7 @@
 
 int main()
 {
-    size_t testNumber = 19;
+    size_t testNumber = 24;
 
 
 	switch (testNumber)
@@ -69,6 +69,21 @@ int main()
 			break;		
 		case 20:
 			za::dp::ex::creational::singleton();
+			break;		
+		case 21:
+			za::dp::ex::structural::adapter();
+			break;			
+		case 22:
+			za::dp::ex::structural::bridge();
+			break;			
+		case 23:
+			za::dp::ex::structural::composite();
+			break;		
+		case 24:
+			za::dp::ex::structural::decorator();
+			break;		
+		case 25:
+			za::dp::ex::structural::facade();
 			break;
 		default:
 			za::dp::ex::chainOfResponsability();

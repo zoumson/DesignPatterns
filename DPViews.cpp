@@ -603,9 +603,9 @@ namespace za
 					};					
 					auto example5 = [&]()
 					{
-						Dog5* dog5 = new Dog5;
-						who_am_i(dog5);
-						delete dog5;
+						//Dog5* dog5 = new Dog5;
+						//who_am_i(dog5);
+						//delete dog5;
 					};
 					//example1();
 					//example2();
@@ -622,7 +622,376 @@ namespace za
 					elected->giveSpeech();
 				}
 			}
+			namespace structural
+			{
+				void adapter()
+				{
+					using namespace za::dp::structural::adp;
 
+					auto example1 = [&]()
+					{
+						// Client code
+						std::unique_ptr<DogFemaleS1> dogFemale = std::make_unique<DogFemaleS1>();
+
+						std::unique_ptr<CatFemaleA1> catFemale = std::make_unique<CatFemaleA1>();
+
+						DogNatureA1 dogNature;
+						//	dogNature.carryOutNature (catFemale);  // Will not compile of course since the parameter must be of type Dog*.
+						//ConversionAdapterA1* adaptedCat = new ConversionAdapterA1(catFemale);  // catFemale has adapted to become a Dog!
+						std::unique_ptr<ConversionAdapterA1> adaptedCat = std::make_unique<ConversionAdapterA1>(catFemale.get());  // catFemale has adapted to become a Dog!
+
+						dogNature.carryOutNature(dogFemale.get());
+						dogNature.carryOutNature(adaptedCat.get());  // So now catFemale, in the form of adaptedCat, participates in the dogNature!
+						// Note that catFemale is carrying out her own type of nature in dogNature though.
+					};
+
+					auto example2 = [&]()
+					{
+						std::cout << "Client: I can work just fine with the Target objects:\n";
+						std::unique_ptr < TargetA2> target = std::make_unique < TargetA2>();
+
+						ClientCodeA2(target.get());
+						std::cout << std::endl << std::endl;
+
+						std::unique_ptr < AdapteeA2> adaptee = std::make_unique < AdapteeA2>();
+						std::cout << "Client: The Adaptee class has a weird interface. See, I don't understand it:\n";
+						std::cout << "Adaptee: " << adaptee->SpecificRequest();
+						std::cout << std::endl << std::endl;
+
+						std::cout << "Client: But I can work with it via the Adapter:\n";
+						std::unique_ptr < AdapterA2> adapter = std::make_unique < AdapterA2>();
+						ClientCodeA2(adapter.get());
+						std::cout << std::endl << std::endl;
+					};
+
+					auto example3 = [&]()
+					{
+						int x = 20, y = 50, w = 300, h = 200;			
+						std::unique_ptr<RectangleA3> r =  std::make_unique<RectangleAdapterA3>(x, y, w, h);
+						r->draw();
+					};
+					
+					auto example4 = [&]()
+					{
+						std::cout << "Client: I can work just fine with the Target objects:\n";
+						std::unique_ptr < TargetA3> target = std::make_unique < TargetA3>();
+
+						ClientCodeA3(target.get());
+						std::cout << std::endl << std::endl;
+
+						std::unique_ptr < AdapteeA3> adaptee = std::make_unique < AdapteeA3>();
+						std::cout << "Client: The Adaptee class has a weird interface. See, I don't understand it:\n";
+						std::cout << "Adaptee: " << adaptee->SpecificRequest();
+						std::cout << std::endl << std::endl;
+
+						std::cout << "Client: But I can work with it via the Adapter:\n";
+						std::unique_ptr < AdapterA3> adapter = std::make_unique < AdapterA3>(adaptee.get());
+						ClientCodeA3(adapter.get());
+						std::cout << std::endl << std::endl;
+					};					
+					
+					auto example5 = [&]()
+					{
+						std::unique_ptr<PrintA5> print(new PrintMessageDisplayA5("Nice to meet you"));
+						print->printWeak();
+						print->printStrong();
+					};
+										
+					auto example6 = [&]()
+					{
+						std::unique_ptr<IAdapteeA6> pAdaptee(new OldClassA6());
+						std::unique_ptr < ITargetA6> pTarget(new AdapterA6(pAdaptee.get()));
+						pTarget->process();
+
+					};
+
+					//example1();
+					//example2();
+					//example3();
+					//example4();
+					//example5();
+					example6();
+				}
+				void bridge()
+				{
+					using namespace za::dp::structural::bd;
+
+					auto example1 = [&]()
+					{
+						std::unique_ptr<ImplementationB1> implementation = std::make_unique<ConcreteImplementationAB1>();
+						//std::unique_ptr<AbstractionB1> abstraction(new AbstractionB1(implementation));
+						std::unique_ptr<AbstractionB1> abstraction = std::make_unique<AbstractionB1>(implementation.get());
+
+						ClientCodeB1(*(abstraction.get()));
+						std::cout << std::endl;
+
+
+						implementation = std::make_unique<ConcreteImplementationBB1>();
+						abstraction = std::make_unique<ExtendedAbstractionB1>(implementation.get());
+
+						ClientCodeB1(*(abstraction.get()));
+					};
+
+					auto example2 = [&]()
+					{
+
+
+						std::unique_ptr<DisplayImplB2> display_impl1(new TextDisplayImplB2("Japan"));
+
+						std::unique_ptr<DisplayB2> d1(new DisplayB2(display_impl1.get()));
+						d1->output();
+
+						std::unique_ptr<DisplayImplB2> display_impl2(new TextDisplayImplB2("The United States of America"));
+						std::unique_ptr<MultiLineDisplayB2> d2(new MultiLineDisplayB2(display_impl2.get()));
+						d2->output();
+						d2->outputMultiple(3);
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+						CircleShapeB3 circle1(1, 2, 3, new DrawingAPI1B3());
+						CircleShapeB3 circle2(5, 7, 11, new DrawingAPI2B3());
+						circle1.resizeByPercentage(2.5);
+						circle2.resizeByPercentage(2.5);
+						circle1.draw();
+						circle2.draw();
+
+					};
+
+					//example1();
+					//example2();
+					example3();
+				}
+
+				void composite()
+				{
+					using namespace za::dp::structural::cmp;
+
+					auto example1 = [&]()
+					{
+						// Initialize four ellipses
+						const std::auto_ptr<EllipseC1> ellipse1(new EllipseC1());
+
+						const std::auto_ptr<EllipseC1> ellipse2(new EllipseC1());
+
+						const std::auto_ptr<EllipseC1> ellipse3(new EllipseC1());
+						const std::auto_ptr<EllipseC1> ellipse4(new EllipseC1());
+
+						// Initialize three composite graphics
+						const std::auto_ptr<CompositeGraphicC1> graphic(new CompositeGraphicC1());
+						const std::auto_ptr<CompositeGraphicC1> graphic1(new CompositeGraphicC1());
+						const std::auto_ptr<CompositeGraphicC1> graphic2(new CompositeGraphicC1());
+
+						// Composes the graphics
+						graphic1->add(ellipse1.get());
+						graphic1->add(ellipse2.get());
+						graphic1->add(ellipse3.get());
+
+						graphic2->add(ellipse4.get());
+
+						graphic->add(graphic1.get());
+						graphic->add(graphic2.get());
+
+						// Prints the complete graphic (four times the string "Ellipse")
+						graphic->print();
+					};
+
+					auto example2 = [&]()
+					{
+						ComponentC2* simple = new LeafC2;
+						std::cout << "Client: I've got a simple component:\n";
+						ClientCode1C2(simple);
+						std::cout << "\n\n";
+						/**
+						   * as well as the complex composites.
+						   */
+
+						ComponentC2* tree = new CompositeC2;
+						ComponentC2* branch1 = new CompositeC2;
+
+						ComponentC2* leaf_1 = new LeafC2;
+						ComponentC2* leaf_2 = new LeafC2;
+						ComponentC2* leaf_3 = new LeafC2;
+
+						branch1->Add(leaf_1);
+						branch1->Add(leaf_2);
+
+						ComponentC2* branch2 = new CompositeC2;
+						branch2->Add(leaf_3);
+
+						tree->Add(branch1);
+						tree->Add(branch2);
+
+						std::cout << "Client: Now I've got a composite tree:\n";
+						ClientCode1C2(tree);
+						std::cout << "\n\n";
+
+						std::cout << "Client: I don't need to check the components classes even when managing the tree:\n";
+						ClientCode2C2(tree, simple);
+						std::cout << "\n";
+
+						delete simple;
+						delete tree;
+						delete branch1;
+						delete branch2;
+						delete leaf_1;
+						delete leaf_2;
+						delete leaf_3;
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+						CompositeC3 composite;
+
+						for (unsigned int i = 0; i < 5; i++)
+						{
+							composite.add(new LeafC3(i));
+						}
+
+						composite.remove(0);
+						composite.operation();
+					};
+
+					//example1();
+					//example2();
+					example3();
+				}
+				void decorator()
+				{
+					using namespace za::dp::structural::dco;
+
+					auto example1 = [&]()
+					{
+						const std::string salutation = "Greetings,";
+						const std::string valediction = "Sincerly, Andy";
+						std::string message1 = "This message is not decorated.";
+						std::string message2 = "This message is decorated with a salutation.";
+						std::string message3 = "This message is decorated with a valediction.";
+						std::string message4 = "This message is decorated with a salutation and a valediction.";
+
+						std::unique_ptr<InterfaceD1> messenger1 = std::make_unique<CoreD1>();
+						std::unique_ptr<InterfaceD1> messenger2 = std::make_unique<MessengerWithSalutationD1>(std::make_unique<CoreD1>(), salutation);
+						std::unique_ptr<InterfaceD1> messenger3 = std::make_unique<MessengerWithValedictionD1>(std::make_unique<CoreD1>(), valediction);
+						std::unique_ptr<InterfaceD1> messenger4 = std::make_unique<MessengerWithValedictionD1>(std::make_unique<MessengerWithSalutationD1>
+							(std::make_unique<CoreD1>(), salutation), valediction);
+
+						messenger1->write(message1);
+						std::cout << message1 << '\n';
+						std::cout << "\n------------------------------\n\n";
+
+						messenger2->write(message2);
+						std::cout << message2 << '\n';
+						std::cout << "\n------------------------------\n\n";
+
+						messenger3->write(message3);
+						std::cout << message3 << '\n';
+						std::cout << "\n------------------------------\n\n";
+
+						messenger4->write(message4);
+						std::cout << message4 << '\n';
+						std::cout << "\n------------------------------\n\n";
+					};
+
+					auto example2 = [&]()
+					{
+						/**
+						* This way the client code can support both simple components...
+						*/
+						std::unique_ptr<ComponentD2> simple(new ConcreteComponentD2);
+						std::cout << "Client: I've got a simple component:\n";
+						ClientCodeD2(simple.get());
+						std::cout << "\n\n";
+						/**
+					   * ...as well as decorated ones.
+					   *
+					   * Note how decorators can wrap not only simple components but the other
+					   * decorators as well.
+					   */
+						std::unique_ptr<ComponentD2> decorator1(new ConcreteDecoratorAD2(simple.get()));
+						std::unique_ptr<ComponentD2> decorator2(new ConcreteDecoratorBD2(decorator1.get()));
+						std::cout << "Client: Now I've got a decorated component:\n";
+						ClientCodeD2(decorator2.get());
+						std::cout << "\n";
+
+					};
+
+					auto example3 = [&]()
+					{
+						//Create our Car that we want to buy
+						std::unique_ptr<CarD3> b (new CarModel1D3());
+
+						std::cout << "Base model of " << b->getDescription() << " costs $" << b->getCost() << "\n";
+
+						////Who wants base model let's add some more features
+
+						//release() don't call the destrucor while get() does
+						b = std::make_unique<NavigationD3>(b.release());
+						std::cout << b->getDescription() << " will cost you $" << b->getCost() << "\n";
+						b = std::make_unique<PremiumSoundSystemD3>(b.release());
+						b = std::make_unique<ManualTransmissionD3>(b.release());
+						std::cout << b->getDescription() << " will cost you $" << b->getCost() << "\n";
+
+					};
+					auto example4 = [&]()
+					{
+						/**
+						* This way the client code can support both simple components...
+						*/
+
+						std::unique_ptr<ComponentD4> simple(new ConcreteComponentD4);
+						std::cout << "Client: I've got a simple component:\n";
+						ClientCodeD4(simple.get());
+						std::cout << "\n\n";
+
+						/**
+						* ...as well as decorated ones.
+						*
+						* Note how decorators can wrap not only simple components but the other
+						* decorators as well.
+						*
+						*/
+
+						std::unique_ptr < ComponentD4> decorator1(new ConcreteDecoratorAD4(simple.get()));
+						std::unique_ptr < ComponentD4> decorator2(new ConcreteDecoratorBD4(decorator1.get()));
+						std::cout << "Client: Now I've got a decorated component:\n";
+						ClientCodeD4(decorator2.get());
+						std::cout << "\n";
+					};
+
+					//example1();
+					//example2();
+					example3();
+					//example4();
+				}
+
+				void facade()
+				{
+					using namespace za::dp::structural::fa;
+					auto example1 = [&]()
+					{
+						HouseFacade1 hf;
+
+						//Rather than calling 100 different on and off functions thanks to facade I only have 2 functions...
+						hf.goToWork();
+						hf.comeHome();
+					};
+					
+					
+					example1();
+
+
+
+				}
+
+			}
 			
 		}
 
