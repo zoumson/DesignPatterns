@@ -16,44 +16,47 @@ namespace za
 {
 	namespace dp
 	{
-		namespace ob
+		namespace behavioral
 		{
-			class Subscriber 
-			 {
+			namespace ob
+			{
+				class Subscriber
+				{
 				public:
 					virtual void notify(const std::string& publisherName, const std::string& message) = 0;
 					virtual std::string getName() = 0;
-			};
+				};
 
-			class Publisher 
-			{
+				class Publisher
+				{
 				public:
 					virtual void subscribe(Subscriber* subscriber) = 0;
 					virtual void unsubscribe(Subscriber* subscriber) = 0;
 					virtual void publish(const std::string& message) = 0;
-			};
+				};
 
-			class ChatGroup : public Publisher 
-			{
-				std::string groupName;
-				std::vector<Subscriber*> subscribers;
-			public:
-				ChatGroup(const std::string& name) : groupName(name) {};
-				void subscribe(Subscriber* subscriber) override;
-				void unsubscribe(Subscriber* subscriber) override;
-				void publish(const std::string& message) override;
-			};
+				class ChatGroup : public Publisher
+				{
+					std::string groupName;
+					std::vector<Subscriber*> subscribers;
+				public:
+					ChatGroup(const std::string& name) : groupName(name) {};
+					void subscribe(Subscriber* subscriber) override;
+					void unsubscribe(Subscriber* subscriber) override;
+					void publish(const std::string& message) override;
+				};
 
-			class ChatUser : public Subscriber 
-			{
-				std::string userName;
-			public:
-				ChatUser(const std::string& userName) : userName(userName) {};
-				void notify(const std::string& publisherName, const std::string& message) override;
-				std::string getName() override;
-			};
+				class ChatUser : public Subscriber
+				{
+					std::string userName;
+				public:
+					ChatUser(const std::string& userName) : userName(userName) {};
+					void notify(const std::string& publisherName, const std::string& message) override;
+					std::string getName() override;
+				};
 
 
+			}
 		}
 	}
 }

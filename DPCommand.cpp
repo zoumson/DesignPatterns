@@ -5,10 +5,12 @@ namespace za
 {
 	namespace dp
 	{
-		namespace cmd
-		{
+        namespace behavioral
+        {
+            namespace cmd
+            {
 
-                void Canvas::addShape(const std::string& newShape) 
+                void Canvas::addShape(const std::string& newShape)
                 {
                     shapes.push_back(newShape);
                 };
@@ -16,21 +18,22 @@ namespace za
                 {
                     shapes.clear();
                 };
-                std::vector<std::string> Canvas::getShapes() 
-                { 
-                    return shapes; 
+                std::vector<std::string> Canvas::getShapes()
+                {
+                    return shapes;
                 };
 
-                void AddShapeCommand::execute() 
+                void AddShapeCommand::execute()
                 {
                     canvas->addShape(shapeName);
                 }
 
-                void ClearCommand::execute() 
+                void ClearCommand::execute()
                 {
                     canvas->clearAll();
                 }
 
-		}
+            }
+        }
 	}
 }

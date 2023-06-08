@@ -16,53 +16,56 @@ namespace za
 {
 	namespace dp
 	{
-		namespace sta
-		{
-            class State 
+        namespace behavioral
+        {
+            namespace sta
             {
-            public:
-                virtual std::string getDescription() = 0;
-                virtual State* getNextState() = 0;
-            };
+                class State
+                {
+                public:
+                    virtual std::string getDescription() = 0;
+                    virtual State* getNextState() = 0;
+                };
 
-            class PurchasedState : public State 
-            {
-                State* nextState = nullptr;
-            public:
-                PurchasedState(State* nextState) : nextState(nextState) {};
-                std::string getDescription() override;
-                State* getNextState() override;
-            };
+                class PurchasedState : public State
+                {
+                    State* nextState = nullptr;
+                public:
+                    PurchasedState(State* nextState) : nextState(nextState) {};
+                    std::string getDescription() override;
+                    State* getNextState() override;
+                };
 
-            class InTransitState : public State 
-            {
-                State* nextState = nullptr;
-            public:
-                InTransitState(State* nextState) : nextState(nextState) {};
-                std::string getDescription() override;
-                State* getNextState() override;
-            };
+                class InTransitState : public State
+                {
+                    State* nextState = nullptr;
+                public:
+                    InTransitState(State* nextState) : nextState(nextState) {};
+                    std::string getDescription() override;
+                    State* getNextState() override;
+                };
 
-            class DeliveredState : public State 
-            {
-                State* nextState = nullptr;
-            public:
-                DeliveredState(State* nextState) : nextState(nextState) {};
-                std::string getDescription() override;
-                State* getNextState() override;
-            };
+                class DeliveredState : public State
+                {
+                    State* nextState = nullptr;
+                public:
+                    DeliveredState(State* nextState) : nextState(nextState) {};
+                    std::string getDescription() override;
+                    State* getNextState() override;
+                };
 
-            class Purchase 
-            {
-                std::string productName;
-                State* currentState;
-            public:
-                Purchase(const std::string& productName, State* initialState)
-                    : productName(productName), currentState(initialState) {};
-                std::string getDescription();
-                void goToNextState();               
-            };
+                class Purchase
+                {
+                    std::string productName;
+                    State* currentState;
+                public:
+                    Purchase(const std::string& productName, State* initialState)
+                        : productName(productName), currentState(initialState) {};
+                    std::string getDescription();
+                    void goToNextState();
+                };
 
-		}
+            }
+        }
 	}
 }

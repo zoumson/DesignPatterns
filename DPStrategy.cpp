@@ -5,28 +5,31 @@ namespace za
 {
 	namespace dp
 	{
-		namespace str
-		{
-                void FormalGreetingStrategy::greet(const std::string& name) 
+        namespace behavioral
+        {
+            namespace str
+            {
+                void FormalGreetingStrategy::greet(const std::string& name)
                 {
                     std::cout << "Good morning " << name << ", how do you do?\n";
                 }
-                void NormalGreetingStrategy::greet(const std::string& name) 
+                void NormalGreetingStrategy::greet(const std::string& name)
                 {
                     std::cout << "Hi " << name << ", how are you?\n";
                 }
-                void InformalGreetingStrategy::greet(const std::string& name) 
+                void InformalGreetingStrategy::greet(const std::string& name)
                 {
                     std::cout << "Hey " << name << ", what's up?\n";
                 }
-                Person::~Person() 
-                { 
-                    delete greetingStrategy; 
+                Person::~Person()
+                {
+                    delete greetingStrategy;
                 };
-                void Person::greet(const std::string& name) 
+                void Person::greet(const std::string& name)
                 {
                     greetingStrategy->greet(name);
                 }
-		}
+            }
+        }
 	}
 }

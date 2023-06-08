@@ -4,10 +4,12 @@ namespace za
 {
 	namespace dp
 	{
-		namespace nob
-		{
+        namespace behavioral
+        {
+            namespace nob
+            {
 
-                void ConsoleLogger::log(const std::string& message) 
+                void ConsoleLogger::log(const std::string& message)
                 {
                     std::cout << message << "\n";
                 };
@@ -23,11 +25,11 @@ namespace za
                 };
 
 
-                SomeTask::~SomeTask() 
-                { 
-                    delete logger; 
+                SomeTask::~SomeTask()
+                {
+                    delete logger;
                 };
-                void SomeTask::execute() 
+                void SomeTask::execute()
                 {
                     // Do some stuff...
 
@@ -42,6 +44,7 @@ namespace za
                     logger->log("Task complete!");
                 }
 
-		}
+            }
+        }
 	}
 }

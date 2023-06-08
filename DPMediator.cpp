@@ -3,39 +3,41 @@
 namespace za
 {
 	namespace dp
-	{
-		namespace med
-		{
+	{	
+        namespace behavioral
+        {
+            namespace med
+            {
 
-                void InterfaceElement::setVisibility(bool isVisible) 
-                { 
-                    this->isVisible = isVisible; 
+                void InterfaceElement::setVisibility(bool isVisible)
+                {
+                    this->isVisible = isVisible;
                 };
-                std::string InterfaceElement::getDescription() 
+                std::string InterfaceElement::getDescription()
                 {
                     return isVisible
                         ? name + " is visible"
                         : name + " is NOT visible";
                 }
-                
-                void ButtonElement::click() 
+
+                void ButtonElement::click()
                 {
                     mediator->mediate(name + " clicked");
                 };
-                
-                void TextBox::changeText(const std::string& newValue) 
+
+                void TextBox::changeText(const std::string& newValue)
                 {
                     textValue = newValue;
-                    if (newValue.empty()) 
+                    if (newValue.empty())
                     {
                         mediator->mediate(name + " empty");
                     }
-                    else 
+                    else
                     {
                         mediator->mediate(name + " not empty");
                     }
                 };
-     
+
                 void CheckBox::setIsChecked(bool isChecked)
                 {
                     this->isChecked = isChecked;
@@ -57,62 +59,63 @@ namespace za
                     spousesNameTextBox = new TextBox("Spouse's name textbox", false, this);
                     submitButton = new ButtonElement("Submit button", false, this);
                 };
-                UserInterface::~UserInterface() 
+                UserInterface::~UserInterface()
                 {
                     delete nameTextBox;
                     delete isMarriedCheckbox;
                     delete spousesNameTextBox;
                     delete submitButton;
                 };
-                void UserInterface::mediate(const std::string& event)  
+                void UserInterface::mediate(const std::string& event)
                 {
                     std::cout << "Mediating event: " << event << "...\n";
 
-                    if (event == "Name textbox is empty") 
+                    if (event == "Name textbox is empty")
                     {
                         submitButton->setVisibility(false);
                     }
-                    else if (event == "Name textbox is not empty") 
+                    else if (event == "Name textbox is not empty")
                     {
                         submitButton->setVisibility(true);
                     }
-                    else if (event == "Is married checkbox is checked") 
+                    else if (event == "Is married checkbox is checked")
                     {
                         spousesNameTextBox->setVisibility(true);
                     }
-                    else if (event == "Is married checkbox is unchecked") 
+                    else if (event == "Is married checkbox is unchecked")
                     {
                         spousesNameTextBox->setVisibility(false);
                     }
-                    else if (event == "Submit button clicked") 
+                    else if (event == "Submit button clicked")
                     {
                         std::cout << "Submitted!\n";
                     }
-                    else 
+                    else
                     {
                         std::cout << "Unrecognized event!";
                     }
                 }
-                TextBox* UserInterface::getNameTextBox() 
-                { 
-                    return nameTextBox; 
+                TextBox* UserInterface::getNameTextBox()
+                {
+                    return nameTextBox;
                 };
-                CheckBox* UserInterface::getIsMarriedCheckbox() 
-                { 
-                    return isMarriedCheckbox; 
+                CheckBox* UserInterface::getIsMarriedCheckbox()
+                {
+                    return isMarriedCheckbox;
                 };
-                TextBox* UserInterface::getSpousesNameTextBox() 
-                { 
-                    return spousesNameTextBox; 
+                TextBox* UserInterface::getSpousesNameTextBox()
+                {
+                    return spousesNameTextBox;
                 };
-                ButtonElement* UserInterface::getSubmitButton() 
-                { 
-                    return submitButton; 
+                ButtonElement* UserInterface::getSubmitButton()
+                {
+                    return submitButton;
                 };
 
 
 
 
-		}
+            }
+        }
 	}
 }

@@ -1,7 +1,9 @@
+
+
 //#include "DPCommand.h"
 //#include "DPChainOfResponsability.h"
-#pragma once
-#include "DPObserver.h"
+//#pragma once
+//#include "DPObserver.h"
 
 
 /*
@@ -10,6 +12,7 @@ Command
 Observer
 */
 
+/*
 namespace za
 {
 	namespace dp
@@ -71,3 +74,4 @@ namespace za
         };
 	}
 }
+*/

@@ -4,11 +4,13 @@ namespace za
 {
 	namespace dp
 	{
-		namespace cr
-		{	
-			//Concrete handlers
-			// Class 1
-			std::string NotEmptyValidator::validate(std::string testString) 
+		namespace behavioral
+		{
+			namespace cr
+			{
+				//Concrete handlers
+				// Class 1
+				std::string NotEmptyValidator::validate(std::string testString)
 				{
 					std::cout << "Checking if empty..." << std::endl;
 					if (testString.empty())
@@ -17,8 +19,8 @@ namespace za
 					}
 					return BaseValidator::validate(testString);
 				}
-			// Class 2
-			std::string LengthValidator::validate(std::string testString) 
+				// Class 2
+				std::string LengthValidator::validate(std::string testString)
 				{
 					std::cout << "Checking string length..." << std::endl;
 					if (testString.length() < minLength)
@@ -26,9 +28,9 @@ namespace za
 						return "Please enter a value longer than " + std::to_string(minLength);
 					}
 					return BaseValidator::validate(testString);
-				}			
-			// Class 2
-			std::string RegexValidator::validate(std::string testString) 
+				}
+				// Class 2
+				std::string RegexValidator::validate(std::string testString)
 				{
 					std::cout << "Checking regex match..." << std::endl;
 					if (!std::regex_match(testString, std::regex(regexString)))
@@ -37,8 +39,8 @@ namespace za
 					}
 					return BaseValidator::validate(testString);
 				}
-			// Class 3
-			std::string HistoryValidator::validate(std::string testString) 
+				// Class 3
+				std::string HistoryValidator::validate(std::string testString)
 				{
 					std::cout << "Checking if string has been used before..." << std::endl;
 					if (za::dp::com::inArray(testString, historyItems))
@@ -46,7 +48,8 @@ namespace za
 						return "Please enter a value here that you haven't entered before";
 					}
 					return BaseValidator::validate(testString);
-				}		
+				}
+			}
 		}
 	}
 }

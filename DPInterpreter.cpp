@@ -6,33 +6,36 @@ namespace za
 {
 	namespace dp
 	{
-		namespace itr
-		{
+        namespace behavioral
+        {
+            namespace itr
+            {
 
 
-          
-                int OperationExpression::evaluate()  
+
+                int OperationExpression::evaluate()
                 {
-                    if (operatorSymbol == "plus") 
+                    if (operatorSymbol == "plus")
                     {
                         return leftHandSide->evaluate() + rightHandSide->evaluate();
                     }
-                    else if (operatorSymbol == "minus") 
+                    else if (operatorSymbol == "minus")
                     {
                         return leftHandSide->evaluate() - rightHandSide->evaluate();
                     }
-                    else 
+                    else
                     {
                         std::cout << "Unrecognized operator: " << operatorSymbol;
                         return 0;
                     }
                 }
 
-                int NumberExpression::evaluate()  
+                int NumberExpression::evaluate()
                 {
                     return std::stoi(numberString);
                 }
 
-		}
+            }
+        }
 	}
 }

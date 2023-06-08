@@ -5,368 +5,652 @@ namespace za
 	{
 		namespace ex
 		{
-			void chainOfResponsability()
+
+#pragma region behavioral
+
+			namespace behavioral
 			{
-				za::dp::cr::StringValidator* emailValidator = new za::dp::cr::BaseValidator;
-				emailValidator
-					->setNext(new za::dp::cr::NotEmptyValidator)
-					->setNext(new za::dp::cr::RegexValidator("email address",
-						"^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"));
-
-				std::cout << "------------Checking Emails------------" << std::endl;
-				std::cout << "Input: \n" << emailValidator->validate("") << "\n\n";
-				std::cout << "Input: shaun\n" << emailValidator->validate("shaun") << "\n\n";
-				std::cout << "Input: shaun@test.com\n" << emailValidator->validate("haun@test.com") << "\n\n";
-				delete emailValidator;
-			}						
-			void command()
-			{
-				za::dp::cmd::Canvas* canvas = new za::dp::cmd::Canvas;
-
-				za::dp::cmd::Button* addTriangleButton = new za::dp::cmd::Button(new za::dp::cmd::AddShapeCommand("triangle", canvas));
-				za::dp::cmd::Button* addSquareButton = new za::dp::cmd::Button(new za::dp::cmd::AddShapeCommand("square", canvas));
-				za::dp::cmd::Button* clearButton = new za::dp::cmd::Button(new za::dp::cmd::ClearCommand(canvas));
-
-				addTriangleButton->click();
-
-				std::cout << "Current canvas state: " << za::dp::com::vectorToString(canvas->getShapes()) << "\n";
-
-				addSquareButton->click();
-				addSquareButton->click();
-				addTriangleButton->click();
-
-				std::cout << "Current canvas state: " << za::dp::com::vectorToString(canvas->getShapes()) << "\n";
-
-				clearButton->click();
-
-				std::cout << "Current canvas state: " << za::dp::com::vectorToString(canvas->getShapes()) << "\n";
-
-				delete canvas;
-			}			
-			void mediator()
-			{
-				za::dp::med::UserInterface* ui = new za::dp::med::UserInterface;
-
-				za::dp::med::InterfaceElement* elements[] = 
+				void chainOfResponsability()
 				{
-					ui->getNameTextBox(),
-					ui->getIsMarriedCheckbox(),
-					ui->getSpousesNameTextBox(),
-					ui->getSubmitButton(),
-				};
+					using namespace za::dp::behavioral::cr;
 
-				for (auto element : elements) 
+					auto example1 = [&]()
+					{
+						std::unique_ptr<StringValidator> emailValidator (new BaseValidator);
+						emailValidator
+							->setNext(new NotEmptyValidator)
+							->setNext(new RegexValidator("email address",
+								"^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"));
+
+						std::cout << "------------Checking Emails------------" << std::endl;
+						std::cout << "Input: \n" << emailValidator->validate("") << "\n\n";
+						std::cout << "Input: shaun\n" << emailValidator->validate("shaun") << "\n\n";
+						std::cout << "Input: shaun@test.com\n" << emailValidator->validate("haun@test.com") << "\n\n";
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+				}
+				void command()
 				{
-					std::cout << element->getDescription() << "\n\n";
+					using namespace za::dp::behavioral::cmd;
+
+
+					auto example1 = [&]()
+					{
+
+						std::unique_ptr<Canvas> canvas(new Canvas);
+
+						std::unique_ptr < Button> addTriangleButton(new Button(new AddShapeCommand("triangle", canvas.get())));
+						std::unique_ptr < Button> addSquareButton(new Button(new AddShapeCommand("square", canvas.get())));
+						std::unique_ptr < Button> clearButton(new Button(new ClearCommand(canvas.get())));
+
+						addTriangleButton->click();
+
+						std::cout << "Current canvas state: " << za::dp::com::vectorToString(canvas->getShapes()) << "\n";
+
+						addSquareButton->click();
+						addSquareButton->click();
+						addTriangleButton->click();
+
+						std::cout << "Current canvas state: " << za::dp::com::vectorToString(canvas->getShapes()) << "\n";
+
+						clearButton->click();
+
+						std::cout << "Current canvas state: " << za::dp::com::vectorToString(canvas->getShapes()) << "\n";
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+				}
+				void mediator()
+				{
+					using namespace za::dp::behavioral::med;
+
+
+					auto example1 = [&]()
+					{
+
+						std::unique_ptr<UserInterface> ui(new UserInterface);
+
+						InterfaceElement* elements[] =
+						{
+							ui->getNameTextBox(),
+							ui->getIsMarriedCheckbox(),
+							ui->getSpousesNameTextBox(),
+							ui->getSubmitButton(),
+						};
+
+						for (auto element : elements)
+						{
+							std::cout << element->getDescription() << "\n\n";
+						}
+
+						ui->getIsMarriedCheckbox()->setIsChecked(true);
+
+						for (auto element : elements)
+						{
+							std::cout << element->getDescription() << "\n";
+						}
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+				}
+				void observer()
+				{
+					using namespace za::dp::behavioral::ob;
+
+
+					auto example1 = [&]()
+					{
+
+						std::unique_ptr<ChatUser> user1 (new ChatUser("Jim"));
+						std::unique_ptr<ChatUser> user2 ( new ChatUser("Barb"));
+						std::unique_ptr<ChatUser> user3 ( new ChatUser("Hannah"));
+
+						std::unique_ptr < ChatGroup> group1 ( new ChatGroup("Gardening group"));
+						std::unique_ptr < ChatGroup> group2 ( new ChatGroup("Dog-lovers group"));
+
+						group1->subscribe(user1.get());
+						group1->subscribe(user2.get());
+
+						group2->subscribe(user2.get());
+						group2->subscribe(user3.get());
+
+						group1->publish("Special sale on gardening supplies!");
+						group2->publish("It's national dog day everyone!");
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+
+
+
+				}
+				/*
+				void chainRespObserCmd()
+				{
+					za::dp::ob::ChatUser* user1 = new za::dp::ob::ChatUser("Jim");
+					za::dp::ob::ChatUser* user2 = new za::dp::ob::ChatUser("Barb");
+					za::dp::ob::ChatUser* user3 = new za::dp::ob::ChatUser("Hannah");
+
+					za::dp::ob::ChatGroup* group1 = new za::dp::ob::ChatGroup("Gardening group");
+					za::dp::ob::ChatGroup* group2 = new za::dp::ob::ChatGroup("Dog-lovers group");
+
+					group1->subscribe(user1);
+					group1->subscribe(user2);
+
+					group2->subscribe(user2);
+					group2->subscribe(user3);
+
+					za::dp::Handler* sendMessageChain = new za::dp::BaseHandler;
+
+					sendMessageChain
+						->setNext(new NotEmptyValidator)
+						->setNext(new LengthValidator(2))
+						->setNext(new PostMessageHandler);
+
+					SendMessageCommand* emptyMessage = new SendMessageCommand(group1, "");
+					SendMessageCommand* tooShortMessage = new SendMessageCommand(group1, "H");
+					SendMessageCommand* sayHelloToGroup1 = new SendMessageCommand(group1, "Hello everyone in group 1!");
+					SendMessageCommand* sayHelloToGroup2 = new SendMessageCommand(group2, "Hello everyone in group 2!");
+
+					std::cout << "Sending empty message:\n" << sendMessageChain->handle(emptyMessage) << "\n\n";
+					std::cout << "Sending short message:\n" << sendMessageChain->handle(tooShortMessage) << "\n\n";
+					std::cout << "Sending message to group 1:\n" << sendMessageChain->handle(sayHelloToGroup1) << "\n\n";
+					std::cout << "Sending message to group 2:\n" << sendMessageChain->handle(sayHelloToGroup2) << "\n\n";
+
+					delete user1;
+					delete user2;
+					delete user3;
+					delete group1;
+					delete group2;
+					delete emptyMessage;
+					delete tooShortMessage;
+					delete sayHelloToGroup1;
+					delete sayHelloToGroup2;
+					delete sendMessageChain;
+
 				}
 
-				ui->getIsMarriedCheckbox()->setIsChecked(true);
+				*/
 
-				for (auto element : elements) 
+				void interpreter()
 				{
-					std::cout << element->getDescription() << "\n";
+					using namespace za::dp::behavioral::itr;
+
+
+					auto example1 = [&]()
+					{
+
+						std::unique_ptr<NumberExpression> five ( new NumberExpression("5"));
+						std::unique_ptr<NumberExpression> seven ( new NumberExpression("7"));
+						std::unique_ptr<OperationExpression> fivePlusSeven ( new OperationExpression("plus", five.get(), seven.get()));
+
+						std::unique_ptr<NumberExpression> thirteen ( new NumberExpression("13"));
+						std::unique_ptr<OperationExpression> complexOp ( new OperationExpression("minus", thirteen.get(), fivePlusSeven.get()));
+
+						std::cout << "Five plus seven is: " << fivePlusSeven->evaluate() << "\n";
+
+						std::cout << "13 - (5 + 7) = " << complexOp->evaluate() << "\n";
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
 				}
-
-				delete ui;
-			}
-			void observer()
-			{
-				za::dp::ob::ChatUser* user1 = new za::dp::ob::ChatUser("Jim");
-				za::dp::ob::ChatUser* user2 = new za::dp::ob::ChatUser("Barb");
-				za::dp::ob::ChatUser* user3 = new za::dp::ob::ChatUser("Hannah");
-
-				za::dp::ob::ChatGroup* group1 = new za::dp::ob::ChatGroup("Gardening group");
-				za::dp::ob::ChatGroup* group2 = new za::dp::ob::ChatGroup("Dog-lovers group");
-
-				group1->subscribe(user1);
-				group1->subscribe(user2);
-
-				group2->subscribe(user2);
-				group2->subscribe(user3);
-
-				group1->publish("Special sale on gardening supplies!");
-				group2->publish("It's national dog day everyone!");
-
-				delete user1;
-				delete user2;
-				delete user3;
-				delete group1;
-				delete group2;
-			}
-			void chainRespObserCmd()
-			{
-				za::dp::ob::ChatUser* user1 = new za::dp::ob::ChatUser("Jim");
-				za::dp::ob::ChatUser* user2 = new za::dp::ob::ChatUser("Barb");
-				za::dp::ob::ChatUser* user3 = new za::dp::ob::ChatUser("Hannah");
-
-				za::dp::ob::ChatGroup* group1 = new za::dp::ob::ChatGroup("Gardening group");
-				za::dp::ob::ChatGroup* group2 = new za::dp::ob::ChatGroup("Dog-lovers group");
-
-				group1->subscribe(user1);
-				group1->subscribe(user2);
-
-				group2->subscribe(user2);
-				group2->subscribe(user3);
-
-				za::dp::Handler* sendMessageChain = new za::dp::BaseHandler;
-
-				sendMessageChain
-					->setNext(new NotEmptyValidator)
-					->setNext(new LengthValidator(2))
-					->setNext(new PostMessageHandler);
-
-				SendMessageCommand* emptyMessage = new SendMessageCommand(group1, "");
-				SendMessageCommand* tooShortMessage = new SendMessageCommand(group1, "H");
-				SendMessageCommand* sayHelloToGroup1 = new SendMessageCommand(group1, "Hello everyone in group 1!");
-				SendMessageCommand* sayHelloToGroup2 = new SendMessageCommand(group2, "Hello everyone in group 2!");
-
-				std::cout << "Sending empty message:\n" << sendMessageChain->handle(emptyMessage) << "\n\n";
-				std::cout << "Sending short message:\n" << sendMessageChain->handle(tooShortMessage) << "\n\n";
-				std::cout << "Sending message to group 1:\n" << sendMessageChain->handle(sayHelloToGroup1) << "\n\n";
-				std::cout << "Sending message to group 2:\n" << sendMessageChain->handle(sayHelloToGroup2) << "\n\n";
-
-				delete user1;
-				delete user2;
-				delete user3;
-				delete group1;
-				delete group2;
-				delete emptyMessage;
-				delete tooShortMessage;
-				delete sayHelloToGroup1;
-				delete sayHelloToGroup2;
-				delete sendMessageChain;
-
-			}
-			void interpreter()
-			{
-				za::dp::itr::NumberExpression* five = new za::dp::itr::NumberExpression("5");
-				za::dp::itr::NumberExpression* seven = new za::dp::itr::NumberExpression("7");
-				za::dp::itr::OperationExpression* fivePlusSeven = new za::dp::itr::OperationExpression("plus", five, seven);
-
-				za::dp::itr::NumberExpression* thirteen = new za::dp::itr::NumberExpression("13");
-				za::dp::itr::OperationExpression* complexOp = new za::dp::itr::OperationExpression("minus", thirteen, fivePlusSeven);
-
-				std::cout << "Five plus seven is: " << fivePlusSeven->evaluate() << "\n";
-
-				std::cout << "13 - (5 + 7) = " << complexOp->evaluate() << "\n";
-
-				delete five;
-				delete seven;
-				delete fivePlusSeven;
-			}
-			void state()
-			{
-				za::dp::sta::DeliveredState* deliveredState = new za::dp::sta::DeliveredState(nullptr);
-				za::dp::sta::InTransitState* inTransitState = new za::dp::sta::InTransitState(deliveredState);
-				za::dp::sta::PurchasedState* purchasedState = new za::dp::sta::PurchasedState(inTransitState);
-
-				za::dp::sta::Purchase* purchase = new za::dp::sta::Purchase("Shoes", purchasedState);
-
-				std::cout << purchase->getDescription() << "\n";
-
-				purchase->goToNextState();
-				std::cout << purchase->getDescription() << "\n";
-
-				purchase->goToNextState();
-				std::cout << purchase->getDescription() << "\n";
-
-				delete deliveredState;
-				delete inTransitState;
-				delete purchasedState;
-				delete purchase;
-			}
-			void strategy()
-			{
-				za::dp::str::Person businessPerson(new za::dp::str::FormalGreetingStrategy());
-				za::dp::str::Person normalPerson(new za::dp::str::NormalGreetingStrategy());
-				za::dp::str::Person coolPerson(new za::dp::str::InformalGreetingStrategy());
-				za::dp::str::Person politician(new za::dp::str::FormalGreetingStrategy());
-
-				std::cout << "The businessperson says: ";
-				businessPerson.greet("Shaun");
-
-				std::cout << "The normal person says: ";
-				normalPerson.greet("Shaun");
-
-				std::cout << "The cool person says: ";
-				coolPerson.greet("Shaun");
-
-				std::cout << "The politician says: ";
-				politician.greet("Shaun");
-
-
-
-			}
-			void templatee()
-			{
-				za::dp::tmp::GreetingCardTemplate gct;
-				za::dp::tmp::BirthdayCardTemplate bct;
-				za::dp::tmp::NewYearsCardTemplate nyct;
-
-				std::cout << "Here's a regular greeting card:\n\n" << gct.generate("Bob", "Jane") << "\n";
-				std::cout << "Here's a birthday card:\n\n" << bct.generate("Bob", "Jane") << "\n";
-				std::cout << "Here's a new year's card:\n\n" << nyct.generate("Bob", "Jane") << "\n";
-			}
-			void visitor()
-			{
-				za::dp::vis::Person person("John", 40);
-				za::dp::vis::Landmark landmark("Eiffel Tower", "Paris");
-				za::dp::vis::Car car("Chevrolet", "Camaro");
-
-				za::dp::vis::DatabaseVisitor* dbv = new za::dp::vis::DatabaseVisitor;
-				za::dp::vis::TextFileVisitor* tfv = new za::dp::vis::TextFileVisitor;
-
-				person.accept(dbv);
-				landmark.accept(dbv);
-				car.accept(dbv);
-
-				person.accept(tfv);
-				landmark.accept(tfv);
-				car.accept(tfv);
-
-				delete dbv;
-				delete tfv;
-			}
-			void templateVisitor()
-			{
-				za::dp::tvi::Person* person1 = new za::dp::tvi::Person("John", 40);
-				za::dp::tvi::Person* person2 = new za::dp::tvi::Person("Joan", 80);
-				za::dp::tvi::Person* person3 = new za::dp::tvi::Person("Brenda", 25);
-
-				za::dp::tvi::GreetingCardGenerator* generator = new za::dp::tvi::GreetingCardGenerator;
-				generator->addPerson(person1);
-				generator->addPerson(person2);
-				generator->addPerson(person3);
-
-				generator->setTemplate(new za::dp::tvi::BirthdayCardTemplate("Bob"));
-				for (auto card : generator->createGreetingCards()) 
+				void state()
 				{
-					std::cout << card << "\n";
+					using namespace za::dp::behavioral::sta;
+
+
+					auto example1 = [&]()
+					{
+
+
+						std::unique_ptr<DeliveredState> deliveredState ( new DeliveredState(nullptr));
+						std::unique_ptr<InTransitState> inTransitState ( new InTransitState(deliveredState.get()));
+						std::unique_ptr<PurchasedState> purchasedState ( new PurchasedState(inTransitState.get()));
+
+						std::unique_ptr<Purchase> purchase ( new Purchase("Shoes", purchasedState.get()));
+
+						std::cout << purchase->getDescription() << "\n";
+
+						purchase->goToNextState();
+						std::cout << purchase->getDescription() << "\n";
+
+						purchase->goToNextState();
+						std::cout << purchase->getDescription() << "\n";
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+
+
+
+
 				}
-
-				generator->setTemplate(new za::dp::tvi::NewYearsCardTemplate("Penelope"));
-				for (auto card : generator->createGreetingCards()) 
+				void strategy()
 				{
-					std::cout << card << "\n";
+					using namespace za::dp::behavioral::str;
+
+					auto example1 = [&]()
+					{
+						Person businessPerson(new FormalGreetingStrategy());
+						Person normalPerson(new NormalGreetingStrategy());
+						Person coolPerson(new InformalGreetingStrategy());
+						Person politician(new FormalGreetingStrategy());
+
+						std::cout << "The businessperson says: ";
+						businessPerson.greet("Shaun");
+
+						std::cout << "The normal person says: ";
+						normalPerson.greet("Shaun");
+
+						std::cout << "The cool person says: ";
+						coolPerson.greet("Shaun");
+
+						std::cout << "The politician says: ";
+						politician.greet("Shaun");
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+
+
+
+
 				}
-
-				delete person1;
-				delete person2;
-				delete person3;
-			}
-			void iteratorr()
-			{
-				std::vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7 };
-				za::dp::ite::NumberCollection nc(numbers);
-
-				za::dp::ite::NumberIterator* fi = nc.getForwardsIterator();
-				za::dp::ite::NumberIterator* bi = nc.getBackwardsIterator();
-
-				while (!fi->isFinished()) 
+				void templatee()
 				{
-					std::cout << fi->next() << ", ";
+					using namespace za::dp::behavioral::tmp;
+
+					auto example1 = [&]()
+					{
+
+						GreetingCardTemplate gct;
+						BirthdayCardTemplate bct;
+						NewYearsCardTemplate nyct;
+
+						std::cout << "Here's a regular greeting card:\n\n" << gct.generate("Bob", "Jane") << "\n";
+						std::cout << "Here's a birthday card:\n\n" << bct.generate("Bob", "Jane") << "\n";
+						std::cout << "Here's a new year's card:\n\n" << nyct.generate("Bob", "Jane") << "\n";
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+
 				}
+				void visitor()
+				{
+					using namespace za::dp::behavioral::vis;
 
-				std::cout << "\n";
 
-				std::cout << "Iterating through the numbers backwards:\n";
+					auto example1 = [&]()
+					{
 
-				while (!bi->isFinished()) {
-					std::cout << bi->next() << ", ";
+						Person person("John", 40);
+						Landmark landmark("Eiffel Tower", "Paris");
+						Car car("Chevrolet", "Camaro");
+
+						std::unique_ptr<DatabaseVisitor> dbv ( new DatabaseVisitor);
+						std::unique_ptr<TextFileVisitor> tfv ( new TextFileVisitor);
+
+						person.accept(dbv.get());
+						landmark.accept(dbv.get());
+						car.accept(dbv.get());
+
+						person.accept(tfv.get());
+						landmark.accept(tfv.get());
+						car.accept(tfv.get());
+
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
 				}
+				/*
+				void templateVisitor()
+				{
+					za::dp::tvi::Person* person1 = new za::dp::tvi::Person("John", 40);
+					za::dp::tvi::Person* person2 = new za::dp::tvi::Person("Joan", 80);
+					za::dp::tvi::Person* person3 = new za::dp::tvi::Person("Brenda", 25);
 
-				std::cout << "\n";
+					za::dp::tvi::GreetingCardGenerator* generator = new za::dp::tvi::GreetingCardGenerator;
+					generator->addPerson(person1);
+					generator->addPerson(person2);
+					generator->addPerson(person3);
 
-				delete fi;
-				delete bi;
+					generator->setTemplate(new za::dp::tvi::BirthdayCardTemplate("Bob"));
+					for (auto card : generator->createGreetingCards())
+					{
+						std::cout << card << "\n";
+					}
 
+					generator->setTemplate(new za::dp::tvi::NewYearsCardTemplate("Penelope"));
+					for (auto card : generator->createGreetingCards())
+					{
+						std::cout << card << "\n";
+					}
+
+					delete person1;
+					delete person2;
+					delete person3;
+				}
+				*/
+				void iteratorr()
+				{
+					using namespace za::dp::behavioral::ite;
+
+
+					auto example1 = [&]()
+					{
+
+						std::vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7 };
+						NumberCollection nc(numbers);
+
+						std::unique_ptr<NumberIterator> fi (nc.getForwardsIterator());
+						std::unique_ptr<NumberIterator> bi ( nc.getBackwardsIterator());
+
+						while (!fi->isFinished())
+						{
+							std::cout << fi->next() << ", ";
+						}
+
+						std::cout << "\n";
+
+						std::cout << "Iterating through the numbers backwards:\n";
+
+						while (!bi->isFinished())
+						{
+							std::cout << bi->next() << ", ";
+						}
+
+						std::cout << "\n";
+
+
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
+
+
+
+				}
+				void memento()
+				{
+
+					using namespace za::dp::behavioral::mem;
+					Canvas* canvas = new Canvas;
+
+					canvas->addShape("rhombus");
+					canvas->addShape("triangle");
+					canvas->addShape("square");
+					canvas->addShape("circle");
+
+					for (auto shape : canvas->getShapes())
+					{
+						std::cout << shape << ", ";
+					};
+
+					std::cout << "\n";
+
+					canvas->undo();
+
+					for (auto shape : canvas->getShapes())
+					{
+						std::cout << shape << ", ";
+					};
+
+					std::cout << "\n";
+
+					canvas->addShape("rhombus");
+					canvas->addShape("triangle");
+					canvas->addShape("square");
+					canvas->addShape("circle");
+					canvas->undo();
+
+					for (auto shape : canvas->getShapes())
+					{
+						std::cout << shape << ", ";
+					};
+
+					std::cout << "\n";
+
+					delete canvas;
+
+				}
+				void nullObject()
+				{
+					using namespace za::dp::behavioral::nob;
+
+					SomeTask task1(new ConsoleLogger);
+					SomeTask task2(new FileLogger("logs.txt"));
+					SomeTask task3(new ApiLogger("loggingsite.com/api/logs"));
+					SomeTask task4;
+
+					task1.execute();
+					task2.execute();
+					task3.execute();
+					task4.execute();
+				}
+				/*
+				void iterMemNob()
+				{
+					za::dp::mio::NullHistory* history = new za::dp::mio::NullHistory;
+					za::dp::mio::Canvas* canvas = new za::dp::mio::Canvas(history);
+
+					canvas->addShape("rhombus");
+					canvas->addShape("triangle");
+					canvas->addShape("square");
+					canvas->addShape("circle");
+
+					std::cout << "Null canvas current shapes:\n";
+
+					for (auto shape : canvas->getShapes())
+					{
+						std::cout << shape << ", ";
+					};
+
+					std::cout << "\n";
+
+					std::cout << "Trying to undo...\n";
+					canvas->undo();
+					canvas->undo();
+					canvas->undo();
+
+					std::cout << "Null canvas shapes after undo:\n";
+
+					for (auto shape : canvas->getShapes())
+					{
+						std::cout << shape << ", ";
+					};
+
+					std::cout << "\n";
+				}
+				*/
 			}
-			void memento()
-			{
-				za::dp::mem::Canvas* canvas = new za::dp::mem::Canvas;
 
-				canvas->addShape("rhombus");
-				canvas->addShape("triangle");
-				canvas->addShape("square");
-				canvas->addShape("circle");
+#pragma endregion behavioral
 
-				for (auto shape : canvas->getShapes()) 
-				{
-					std::cout << shape << ", ";
-				};
-
-				std::cout << "\n";
-
-				canvas->undo();
-
-				for (auto shape : canvas->getShapes()) 
-				{
-					std::cout << shape << ", ";
-				};
-
-				std::cout << "\n";
-
-				canvas->addShape("rhombus");
-				canvas->addShape("triangle");
-				canvas->addShape("square");
-				canvas->addShape("circle");
-				canvas->undo();
-
-				for (auto shape : canvas->getShapes()) 
-				{
-					std::cout << shape << ", ";
-				};
-
-				std::cout << "\n";
-
-				delete canvas;
-
-			}
-			void nullObject()
-			{
-				za::dp::nob::SomeTask task1(new za::dp::nob::ConsoleLogger);
-				za::dp::nob::SomeTask task2(new za::dp::nob::FileLogger("logs.txt"));
-				za::dp::nob::SomeTask task3(new za::dp::nob::ApiLogger("loggingsite.com/api/logs"));
-				za::dp::nob::SomeTask task4;
-
-				task1.execute();
-				task2.execute();
-				task3.execute();
-				task4.execute();
-			}
-			void iterMemNob()
-			{
-				za::dp::mio::NullHistory* history = new za::dp::mio::NullHistory;
-				za::dp::mio::Canvas* canvas = new za::dp::mio::Canvas(history);
-
-				canvas->addShape("rhombus");
-				canvas->addShape("triangle");
-				canvas->addShape("square");
-				canvas->addShape("circle");
-
-				std::cout << "Null canvas current shapes:\n";
-
-				for (auto shape : canvas->getShapes()) 
-				{
-					std::cout << shape << ", ";
-				};
-
-				std::cout << "\n";
-
-				std::cout << "Trying to undo...\n";
-				canvas->undo();
-				canvas->undo();
-				canvas->undo();
-
-				std::cout << "Null canvas shapes after undo:\n";
-
-				for (auto shape : canvas->getShapes()) 
-				{
-					std::cout << shape << ", ";
-				};
-
-				std::cout << "\n";
-			}
+#pragma region creational
 
 			namespace creational
 			{
@@ -622,6 +906,11 @@ namespace za
 					elected->giveSpeech();
 				}
 			}
+
+#pragma endregion creational
+
+#pragma region structural
+
 			namespace structural
 			{
 				void adapter()
@@ -771,34 +1060,34 @@ namespace za
 				{
 					using namespace za::dp::structural::cmp;
 
-					auto example1 = [&]()
-					{
-						// Initialize four ellipses
-						const std::auto_ptr<EllipseC1> ellipse1(new EllipseC1());
+					//auto example1 = [&]()
+					//{
+					//	// Initialize four ellipses
+					//	const std::auto_ptr<EllipseC1> ellipse1(new EllipseC1());
 
-						const std::auto_ptr<EllipseC1> ellipse2(new EllipseC1());
+					//	const std::auto_ptr<EllipseC1> ellipse2(new EllipseC1());
 
-						const std::auto_ptr<EllipseC1> ellipse3(new EllipseC1());
-						const std::auto_ptr<EllipseC1> ellipse4(new EllipseC1());
+					//	const std::auto_ptr<EllipseC1> ellipse3(new EllipseC1());
+					//	const std::auto_ptr<EllipseC1> ellipse4(new EllipseC1());
 
-						// Initialize three composite graphics
-						const std::auto_ptr<CompositeGraphicC1> graphic(new CompositeGraphicC1());
-						const std::auto_ptr<CompositeGraphicC1> graphic1(new CompositeGraphicC1());
-						const std::auto_ptr<CompositeGraphicC1> graphic2(new CompositeGraphicC1());
+					//	// Initialize three composite graphics
+					//	const std::auto_ptr<CompositeGraphicC1> graphic(new CompositeGraphicC1());
+					//	const std::auto_ptr<CompositeGraphicC1> graphic1(new CompositeGraphicC1());
+					//	const std::auto_ptr<CompositeGraphicC1> graphic2(new CompositeGraphicC1());
 
-						// Composes the graphics
-						graphic1->add(ellipse1.get());
-						graphic1->add(ellipse2.get());
-						graphic1->add(ellipse3.get());
+					//	// Composes the graphics
+					//	graphic1->add(ellipse1.get());
+					//	graphic1->add(ellipse2.get());
+					//	graphic1->add(ellipse3.get());
 
-						graphic2->add(ellipse4.get());
+					//	graphic2->add(ellipse4.get());
 
-						graphic->add(graphic1.get());
-						graphic->add(graphic2.get());
+					//	graphic->add(graphic1.get());
+					//	graphic->add(graphic2.get());
 
-						// Prints the complete graphic (four times the string "Ellipse")
-						graphic->print();
-					};
+					//	// Prints the complete graphic (four times the string "Ellipse")
+					//	graphic->print();
+					//};
 
 					auto example2 = [&]()
 					{
@@ -863,7 +1152,7 @@ namespace za
 					//example1();
 					//example2();
 					example3();
-				}
+				};
 				void decorator()
 				{
 					using namespace za::dp::structural::dco;
@@ -940,6 +1229,7 @@ namespace za
 						std::cout << b->getDescription() << " will cost you $" << b->getCost() << "\n";
 
 					};
+					
 					auto example4 = [&]()
 					{
 						/**
@@ -964,14 +1254,142 @@ namespace za
 						std::cout << "Client: Now I've got a decorated component:\n";
 						ClientCodeD4(decorator2.get());
 						std::cout << "\n";
+					};					
+					
+					auto example5 = [&]()
+					{
+						// 7% tax: 19*1.07 = 20.33
+						std::unique_ptr<ItemD5> item1(
+							std::make_unique<TaxedD5>(0.07,
+								std::make_unique<CppBookD5>("Effective C++", MoneyD5{ 19 })));
+
+						// 20% discount, 19% tax: (999*0.8)*1.19 = 951.05
+						std::unique_ptr<ItemD5> item2(
+							std::make_unique<TaxedD5>(0.19,
+								std::make_unique<DiscountedD5>(0.2,
+									std::make_unique<ConferenceTicketD5>("CppCon", MoneyD5{ 999 }))));
+
+						MoneyD5 const totalPrice1 = item1->price();  // Results in 20.33
+
+						MoneyD5 const totalPrice2 = item2->price();  // Results in 951.05
+						std::cout << "Item1 price[" << totalPrice1 << "]" << std::endl;
+						std::cout << "Item2 price[" << totalPrice2 << "]" << std::endl;
 					};
 
 					//example1();
 					//example2();
-					example3();
+					//example3();
 					//example4();
-				}
+					example5();
+				};
+				void flyweight()
+				{
+					using namespace za::dp::structural::fly;
+					auto example1 = [&]()
+					{
+						std::vector<FlyweightCharacterF1> chars;
 
+						FlyweightCharacterAbstractBuilderF1::setFontsAndNames();
+
+						unsigned short limit = NUMBER_OF_SAME_TYPE_CHARS;
+
+						for (unsigned short i = 0; i < limit; i++) 
+						{
+							chars.push_back(FlyweightCharacterAbstractBuilderF1::createFlyweightCharacter(0, 0, i));
+							chars.push_back(FlyweightCharacterAbstractBuilderF1::createFlyweightCharacter(1, 1, i + 1 * limit));
+							chars.push_back(FlyweightCharacterAbstractBuilderF1::createFlyweightCharacter(2, 2, i + 2 * limit));
+						}
+						/*
+							Each char stores links to its fontName and fontSize so what we get is:
+
+							each object instead of allocating 6 bytes (convention above) for string
+							and 4 bytes for float allocates 2 bytes for fontNameIndex and fontSizeIndex.
+
+							That means for each char we save 6 + 4 - 2 - 2 = 6 bytes.
+							Now imagine we have NUMBER_OF_SAME_TYPE_CHARS = 1000 i.e. with our code
+							we will have 3 groups of chars with 1000 chars in each group which will save
+							3 * 1000 * 6 - (3 * 6 + 3 * 4) = 17970 saved bytes.
+
+							3 * 6 + 3 * 4 is a number of bytes allocated by FlyweightCharacterAbstractBuilder.
+
+							So the idea of the pattern is to move properties shared by many objects to some
+							external container. The objects in that case don't store the data themselves they
+							store only links to the data which saves memory and make the objects lighter.
+							The data size of properties stored externally may be significant which will save REALLY
+							huge amount of memory and will make each object super light in comparison to its counterpart.
+							That's where the name of the pattern comes from: flyweight (i.e. very light).
+						*/
+						for (unsigned short i = 0; i < chars.size(); i++) 
+						{
+							chars[i].print();
+						}
+
+						//std::cin.get(); return 0;
+					};
+
+					auto example2 = [&]()
+					{
+						/**
+						* EN: The client code usually creates a bunch of pre-populated flyweights in
+						* the initialization stage of the application.
+						//*/
+						std::unique_ptr<FlyweightFactoryF2> factory(new FlyweightFactoryF2({ {"Chevrolet", "Camaro2018", "pink"}, {"Mercedes Benz", "C300", "black"}, {"Mercedes Benz", "C500", "red"}, {"BMW", "M5", "red"}, {"BMW", "X6", "white"} }));
+						
+						factory->ListFlyweights();
+
+						AddCarToPoliceDatabaseF2(*(factory.get()),
+							"CL234IR",
+							"James Doe",
+							"BMW",
+							"M5",
+							"red");
+
+						AddCarToPoliceDatabaseF2(*(factory.get()),
+							"CL234IR",
+							"James Doe",
+							"BMW",
+							"X1",
+							"red");
+						factory->ListFlyweights();
+
+
+						//FlyweightFactoryF2* factory = new FlyweightFactoryF2({ {"Chevrolet", "Camaro2018", "pink"}, {"Mercedes Benz", "C300", "black"}, {"Mercedes Benz", "C500", "red"}, {"BMW", "M5", "red"}, {"BMW", "X6", "white"} });
+						//factory->ListFlyweights();
+
+						//AddCarToPoliceDatabaseF2(*factory,
+						//	"CL234IR",
+						//	"James Doe",
+						//	"BMW",
+						//	"M5",
+						//	"red");
+
+						//AddCarToPoliceDatabaseF2(*factory,
+						//	"CL234IR",
+						//	"James Doe",
+						//	"BMW",
+						//	"X1",
+						//	"red");
+						//factory->ListFlyweights();
+						//delete factory;
+
+					};
+
+					auto example3 = [&]()
+					{
+
+
+					};
+					auto example4 = [&]()
+					{
+
+					};
+
+					//example1();
+					example2();
+					//example3();
+					//example4();
+
+				}
 				void facade()
 				{
 					using namespace za::dp::structural::fa;
@@ -992,6 +1410,8 @@ namespace za
 				}
 
 			}
+
+#pragma endregion structural
 			
 		}
 

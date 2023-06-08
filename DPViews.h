@@ -24,27 +24,40 @@
 #include "DPBridge.h"
 #include "DPComposite.h"
 #include "DPDecorator.h"
+#include "DPFlyweight.h"
+
+
 namespace za
 {
 	namespace dp
 	{
 		namespace ex
 		{
-			void chainOfResponsability();
-			void command();
-			void mediator();
-			void observer();
-			void chainRespObserCmd();
-			void interpreter();
-			void state();
-			void strategy();
-			void templatee();
-			void visitor();
-			void templateVisitor();
-			void iteratorr();
-			void memento();
-			void nullObject();
-			void iterMemNob();
+#pragma region behavioral
+
+			namespace behavioral
+			{
+				void chainOfResponsability();
+				void command();
+				void mediator();
+				void observer();
+				void chainRespObserCmd();
+				void interpreter();
+				void state();
+				void strategy();
+				void templatee();
+				void visitor();
+				void templateVisitor();
+				void iteratorr();
+				void memento();
+				void nullObject();
+				void iterMemNob();
+			}
+
+#pragma endregion behavioral
+
+#pragma region creational
+
 			namespace creational
 			{
 				void factoryMethod();
@@ -53,6 +66,11 @@ namespace za
 				void prototypee();
 				void singleton();
 			}
+
+#pragma endregion creational
+
+#pragma region structural
+
 			namespace structural
 			{
 				void adapter();
@@ -63,6 +81,8 @@ namespace za
 				void flyweight();
 				void proxy();
 			}
+
+#pragma endregion structural
 		}
 
 	}

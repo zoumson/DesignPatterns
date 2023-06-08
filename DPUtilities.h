@@ -7,6 +7,8 @@
 #include <memory>
 #include <stdexcept>
 #include <unordered_map>
+#include <concepts>
+#include <cstdint>
 
 namespace za
 {

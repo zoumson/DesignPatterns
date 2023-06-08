@@ -293,6 +293,134 @@ namespace za
 				 */
 				void ClientCodeD4(ComponentD4* component);
 #pragma endregion Example4
+
+#pragma region Example5
+
+				struct MoneyD5
+				{
+					uint64_t value{};
+				};
+				template<class T>
+				concept cond = std::is_arithmetic_v<T>;
+				template< cond T > 
+				//template< typename T > /*requires std::is_arithmetic_v<T>*/
+				MoneyD5 operator*(MoneyD5 money, T factor) 
+				{
+					return MoneyD5{ static_cast<uint64_t>(money.value * factor) };
+				};
+
+				constexpr MoneyD5 operator+(MoneyD5 lhs, MoneyD5 rhs) noexcept
+				{
+					return MoneyD5{ lhs.value + rhs.value };
+				}
+
+				static std::ostream& operator<<(std::ostream& os, MoneyD5 money)
+				{
+					return os << money.value;
+				}
+
+				class ItemD5
+				{
+				public:
+					virtual ~ItemD5() = default;
+					virtual MoneyD5 price() const = 0;
+				};
+
+				class DecoratedItemD5 : public ItemD5
+				{
+				public:
+					explicit DecoratedItemD5(std::unique_ptr<ItemD5> item)
+						: item_(std::move(item))
+					{
+						if (!item_) {
+							throw std::invalid_argument("Invalid item");
+						}
+					}
+
+				protected:
+					ItemD5& item() { return *item_; }
+					ItemD5 const& item() const { return *item_; }
+
+				private:
+					std::unique_ptr<ItemD5> item_;
+				};
+
+				class CppBookD5 : public ItemD5
+				{
+				public:
+					CppBookD5(std::string title, MoneyD5 price)
+						: title_{ std::move(title) }
+						, price_{ price }
+					{}
+
+					std::string const& title() const { return title_; }
+					MoneyD5 price() const override { return price_; }
+
+				private:
+					std::string title_{};
+					MoneyD5 price_{};
+				};
+
+				class ConferenceTicketD5 : public ItemD5
+				{
+				public:
+					ConferenceTicketD5(std::string name, MoneyD5 price)
+						: name_{ std::move(name) }
+						, price_{ price }
+					{}
+
+					std::string const& name() const { return name_; }
+					MoneyD5 price() const override { return price_; }
+
+				private:
+					std::string name_{};
+					MoneyD5 price_{};
+				};
+
+				class DiscountedD5 : public DecoratedItemD5
+				{
+				public:
+					DiscountedD5(double discount, std::unique_ptr<ItemD5> item)
+						: DecoratedItemD5(std::move(item))
+						, factor_(1.0 - discount)
+					{
+						if (!std::isfinite(discount) || discount < 0.0 || discount > 1.0) {
+							throw std::invalid_argument("Invalid discount");
+						}
+					}
+
+					MoneyD5 price() const override
+					{
+						return item().price() * factor_;
+					}
+
+				private:
+					double factor_;
+				};
+
+				class TaxedD5 : public DecoratedItemD5
+				{
+				public:
+					TaxedD5(double taxRate, std::unique_ptr<ItemD5> item)
+						: DecoratedItemD5(std::move(item))
+						, factor_(1.0 + taxRate)
+					{
+						if (!std::isfinite(taxRate) || taxRate < 0.0) {
+							throw std::invalid_argument("Invalid tax");
+						}
+					}
+
+					MoneyD5 price() const override
+					{
+						return item().price() * factor_;
+					}
+
+				private:
+					double factor_;
+				};
+
+
+#pragma endregion Example5
 			}
 		}
 	}

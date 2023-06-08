@@ -5,88 +5,97 @@
 
 int main()
 {
-    size_t testNumber = 24;
+    size_t testNumber = 10;
 
+	using namespace za::dp::ex;
 
 	switch (testNumber)
 	{
+
+#pragma region behavioral
 		case 1:
-			za::dp::ex::chainOfResponsability();
+			behavioral::chainOfResponsability();
 			break;		
 		case 2:
-			za::dp::ex::command();
+			behavioral::command();
 			break;		
 		case 3:
-			za::dp::ex::mediator();
+			behavioral::mediator();
 			break;	
 		case 4:
-			za::dp::ex::observer();
+			behavioral::observer();
 			break;		
 		case 5:
-			za::dp::ex::chainRespObserCmd();
+			behavioral::interpreter();
 			break;		
 		case 6:
-			za::dp::ex::interpreter();
+			behavioral::state();
 			break;		
 		case 7:
-			za::dp::ex::state();
+			behavioral::strategy();
 			break;		
 		case 8:
-			za::dp::ex::strategy();
+			behavioral::templatee();
 			break;		
 		case 9:
-			za::dp::ex::templatee();
+			behavioral::visitor();
 			break;		
 		case 10:
-			za::dp::ex::visitor();
+			behavioral::iteratorr();
 			break;			
 		case 11:
-			za::dp::ex::templateVisitor();
+			behavioral::memento();
 			break;		
 		case 12:
-			za::dp::ex::iteratorr();
+			behavioral::nullObject();
 			break;		
+
+#pragma endregion behavioral
+
+#pragma region creational
+
 		case 13:
-			za::dp::ex::memento();
+			creational::factoryMethod();
 			break;		
 		case 14:
-			za::dp::ex::nullObject();
+			creational::abstracFactory();
 			break;		
 		case 15:
-			za::dp::ex::iterMemNob();
+			creational::builder();
 			break;		
 		case 16:
-			za::dp::ex::creational::factoryMethod();
+			creational::prototypee();
 			break;		
 		case 17:
-			za::dp::ex::creational::abstracFactory();
+			creational::singleton();
 			break;		
+
+#pragma endregion creational
+
+#pragma region structural
 		case 18:
-			za::dp::ex::creational::builder();
-			break;		
+			structural::adapter();
+			break;			
 		case 19:
-			za::dp::ex::creational::prototypee();
-			break;		
+			structural::bridge();
+			break;			
 		case 20:
-			za::dp::ex::creational::singleton();
+			structural::composite();
 			break;		
 		case 21:
-			za::dp::ex::structural::adapter();
-			break;			
+			structural::decorator();
+			break;		
 		case 22:
-			za::dp::ex::structural::bridge();
-			break;			
+			structural::flyweight();
+			break;		
 		case 23:
-			za::dp::ex::structural::composite();
-			break;		
-		case 24:
-			za::dp::ex::structural::decorator();
-			break;		
-		case 25:
-			za::dp::ex::structural::facade();
+			structural::facade();
 			break;
+
+#pragma endregion structural
+
 		default:
-			za::dp::ex::chainOfResponsability();
+			
 			break;
 	}
 	return 0;

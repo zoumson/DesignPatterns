@@ -17,23 +17,23 @@ namespace za
 
 #pragma region Example1
 
-				void EllipseC1::print() const
-				{
-					std::cout << "Ellipse " << std::endl;
-				}
-				
-				void CompositeGraphicC1::print() const
-				{
-					for (GraphicC1* a : graphicList_) 
-					{
-						a->print();
-					}
-				}
+				//void EllipseC1::print() const
+				//{
+				//	std::cout << "Ellipse " << std::endl;
+				//}
+				//
+				//void CompositeGraphicC1::print() const
+				//{
+				//	for (GraphicC1* a : graphicList_) 
+				//	{
+				//		a->print();
+				//	}
+				//}
 
-				void CompositeGraphicC1::add(GraphicC1* aGraphic)
-				{
-					graphicList_.push_back(aGraphic);
-				}
+				//void CompositeGraphicC1::add(GraphicC1* aGraphic)
+				//{
+				//	graphicList_.push_back(aGraphic);
+				//}
 
 #pragma endregion Example1
 

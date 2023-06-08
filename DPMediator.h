@@ -14,56 +14,58 @@ namespace za
 {
 	namespace dp
 	{
-		namespace med
-		{
-
-            class Mediator 
+        namespace behavioral
+        {
+            namespace med
             {
-            public:
-                virtual void mediate(const std::string& event) = 0;
-            };
 
-            class InterfaceElement 
-            {
-            protected:
-                Mediator* mediator;
-                std::string name;
-                bool isVisible = true;
-            public:
-                InterfaceElement(const std::string& name, bool isVisible, Mediator* mediator) : name(name), isVisible(isVisible), mediator(mediator) {};
-                void setVisibility(bool isVisible);
-                std::string getDescription();
- 
-            };
+                class Mediator
+                {
+                public:
+                    virtual void mediate(const std::string& event) = 0;
+                };
 
-            class ButtonElement : public InterfaceElement 
-            {
-            public:
-                ButtonElement(const std::string& name, bool isVisible, Mediator* mediator) : InterfaceElement(name, isVisible, mediator) {};
-                virtual ~ButtonElement() {};
-                virtual void click();
-            };
+                class InterfaceElement
+                {
+                protected:
+                    Mediator* mediator;
+                    std::string name;
+                    bool isVisible = true;
+                public:
+                    InterfaceElement(const std::string& name, bool isVisible, Mediator* mediator) : name(name), isVisible(isVisible), mediator(mediator) {};
+                    void setVisibility(bool isVisible);
+                    std::string getDescription();
 
-            class TextBox : public InterfaceElement 
-            {
-                std::string textValue = "";
-            public:
-                TextBox(const std::string& name, bool isVisible, Mediator* mediator) : InterfaceElement(name, isVisible, mediator) {};
-                virtual ~TextBox() {};
-                virtual void changeText(const std::string& newValue);
-            };
+                };
 
-            class CheckBox : public InterfaceElement 
-            {
+                class ButtonElement : public InterfaceElement
+                {
+                public:
+                    ButtonElement(const std::string& name, bool isVisible, Mediator* mediator) : InterfaceElement(name, isVisible, mediator) {};
+                    virtual ~ButtonElement() {};
+                    virtual void click();
+                };
+
+                class TextBox : public InterfaceElement
+                {
+                    std::string textValue = "";
+                public:
+                    TextBox(const std::string& name, bool isVisible, Mediator* mediator) : InterfaceElement(name, isVisible, mediator) {};
+                    virtual ~TextBox() {};
+                    virtual void changeText(const std::string& newValue);
+                };
+
+                class CheckBox : public InterfaceElement
+                {
                     bool isChecked = false;
                 public:
                     CheckBox(const std::string& name, bool isVisible, Mediator* mediator) : InterfaceElement(name, isVisible, mediator) {};
                     virtual ~CheckBox() {};
                     virtual void setIsChecked(bool isChecked);
-            };
+                };
 
-            class UserInterface : public Mediator 
-            {
+                class UserInterface : public Mediator
+                {
                     TextBox* nameTextBox;
                     CheckBox* isMarriedCheckbox;
                     TextBox* spousesNameTextBox;
@@ -76,7 +78,8 @@ namespace za
                     CheckBox* getIsMarriedCheckbox();
                     TextBox* getSpousesNameTextBox();
                     ButtonElement* getSubmitButton();
-            };
-		}
+                };
+            }
+        }
 	}
 }

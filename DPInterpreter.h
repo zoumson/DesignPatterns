@@ -13,33 +13,36 @@ namespace za
 {
 	namespace dp
 	{
-		namespace itr
-		{
-            class Expression
+        namespace behavioral
+        {
+            namespace itr
             {
-            public:
-                virtual int evaluate() = 0;
-            };
+                class Expression
+                {
+                public:
+                    virtual int evaluate() = 0;
+                };
 
-            // 5 + (10 + 1)
-            class OperationExpression : public Expression
-            {
-                std::string operatorSymbol;
-                Expression* leftHandSide;
-                Expression* rightHandSide;
-            public:
-                OperationExpression(const std::string& operatorSymbol, Expression* lhs, Expression* rhs) : operatorSymbol(operatorSymbol), leftHandSide(lhs), rightHandSide(rhs) {};
-                int evaluate() override;
-            };
+                // 5 + (10 + 1)
+                class OperationExpression : public Expression
+                {
+                    std::string operatorSymbol;
+                    Expression* leftHandSide;
+                    Expression* rightHandSide;
+                public:
+                    OperationExpression(const std::string& operatorSymbol, Expression* lhs, Expression* rhs) : operatorSymbol(operatorSymbol), leftHandSide(lhs), rightHandSide(rhs) {};
+                    int evaluate() override;
+                };
 
-            class NumberExpression : public Expression
-            {
-                std::string numberString;
-            public:
-                NumberExpression(const std::string& numberString) : numberString(numberString) {};
-                int evaluate() override;
-            };
+                class NumberExpression : public Expression
+                {
+                    std::string numberString;
+                public:
+                    NumberExpression(const std::string& numberString) : numberString(numberString) {};
+                    int evaluate() override;
+                };
 
-		}
+            }
+        }
 	}
 }

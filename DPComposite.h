@@ -19,29 +19,29 @@ namespace za
 
 #pragma region Example1
 
-				class GraphicC1
-				{
-				public:
-					virtual void print() const = 0;
-					virtual ~GraphicC1() {}
-				};
+				//class GraphicC1
+				//{
+				//public:
+				//	virtual void print() const = 0;
+				//	virtual ~GraphicC1() {}
+				//};
 
-				class EllipseC1 : public GraphicC1
-				{
-				public:
-					void print() const override;
-				};
+				//class EllipseC1 : public GraphicC1
+				//{
+				//public:
+				//	void print() const override;
+				//};
 
-				class CompositeGraphicC1 : public GraphicC1
-				{
-				public:
-					void print() const override;
+				//class CompositeGraphicC1 : public GraphicC1
+				//{
+				//public:
+				//	void print() const override;
 
-					void add(GraphicC1* aGraphic);
+				//	void add(GraphicC1* aGraphic);
 
-				private:
-					std::vector<GraphicC1*>  graphicList_;
-				};
+				//private:
+				//	std::vector<GraphicC1*>  graphicList_;
+				//};
 #pragma endregion Example1
 
 #pragma region Example2
