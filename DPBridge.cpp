@@ -2,7 +2,7 @@
 #include "DPBridge.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 2. Bridge
 
 

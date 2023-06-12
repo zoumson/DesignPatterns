@@ -2,7 +2,7 @@
 #include "DPUtilities.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 Facade
 
 Facade is one of the easiest patterns I think... And this is very simple example.

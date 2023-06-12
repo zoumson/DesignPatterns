@@ -2,7 +2,7 @@
 #include "DPFlyweight.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 * FlyWeight
 */
 

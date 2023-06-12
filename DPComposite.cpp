@@ -2,7 +2,7 @@
 #include "DPComposite.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 * 3. Composite
 */
 

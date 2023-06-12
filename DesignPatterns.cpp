@@ -2,108 +2,140 @@
 //
 #include "DPViews.h"
 #include <iostream>
+using namespace za::dp::ex;
+void runPattern(const PATTERN& pat);
 
 int main()
 {
-    size_t testNumber = 10;
+	const PATTERN pat = PATTERN::C_SINGLETON;
+	runPattern(pat);
+	return 0;
+}
 
-	using namespace za::dp::ex;
+void runPattern(const PATTERN& pat)
+{
 
-	switch (testNumber)
+	switch (pat)
 	{
 
 #pragma region behavioral
-		case 1:
-			behavioral::chainOfResponsability();
-			break;		
-		case 2:
-			behavioral::command();
-			break;		
-		case 3:
-			behavioral::mediator();
-			break;	
-		case 4:
-			behavioral::observer();
-			break;		
-		case 5:
-			behavioral::interpreter();
-			break;		
-		case 6:
-			behavioral::state();
-			break;		
-		case 7:
-			behavioral::strategy();
-			break;		
-		case 8:
-			behavioral::templatee();
-			break;		
-		case 9:
-			behavioral::visitor();
-			break;		
-		case 10:
-			behavioral::iteratorr();
-			break;			
-		case 11:
-			behavioral::memento();
-			break;		
-		case 12:
-			behavioral::nullObject();
-			break;		
+	case PATTERN::B_CHAIN_OF_RESPONSABILITY:
+		behavioral::chainOfResponsability();
+		break;
+
+	case PATTERN::B_COMMAND:
+		behavioral::command();
+		break;
+
+	case PATTERN::B_MEDIATOR:
+		behavioral::mediator();
+		break;
+
+	case PATTERN::B_OBSERVER:
+		behavioral::observer();
+		break;
+
+	case PATTERN::B_INTERPRETER:
+		behavioral::interpreter();
+		break;
+
+	case PATTERN::B_STATE:
+		behavioral::state();
+		break;
+
+	case PATTERN::B_STRATEGY:
+		behavioral::strategy();
+		break;
+
+	case PATTERN::B_TEMPLATE:
+		behavioral::templatee();
+		break;
+
+	case PATTERN::B_VISITOR:
+		behavioral::visitor();
+		break;
+
+	case PATTERN::B_ITERATOR:
+		behavioral::iteratorr();
+		break;
+
+	case PATTERN::B_MEMENTO:
+		behavioral::memento();
+		break;
+
+	case PATTERN::B_NULL_OBJECT:
+		behavioral::nullObject();
+		break;
 
 #pragma endregion behavioral
 
 #pragma region creational
 
-		case 13:
-			creational::factoryMethod();
-			break;		
-		case 14:
-			creational::abstracFactory();
-			break;		
-		case 15:
-			creational::builder();
-			break;		
-		case 16:
-			creational::prototypee();
-			break;		
-		case 17:
-			creational::singleton();
-			break;		
+	case PATTERN::C_FACTORY_METHOD:
+		creational::factoryMethod();
+		break;
+
+	case PATTERN::C_ABSTRACT_FACTORY:
+		creational::abstracFactory();
+		break;
+
+	case PATTERN::C_BUILDER:
+		creational::builder();
+		break;
+
+	case PATTERN::C_PROTOTYPE:
+		creational::prototypee();
+		break;
+
+	case PATTERN::C_SINGLETON:
+		creational::singleton();
+		break;
 
 #pragma endregion creational
 
 #pragma region structural
-		case 18:
-			structural::adapter();
-			break;			
-		case 19:
-			structural::bridge();
-			break;			
-		case 20:
-			structural::composite();
-			break;		
-		case 21:
-			structural::decorator();
-			break;		
-		case 22:
-			structural::flyweight();
-			break;		
-		case 23:
-			structural::facade();
-			break;
+
+	case PATTERN::S_ADAPTER:
+		structural::adapter();
+		break;
+
+	case PATTERN::S_BRIDGE:
+		structural::bridge();
+		break;
+
+	case PATTERN::S_COMPOSITE:
+		structural::composite();
+		break;
+
+	case PATTERN::S_DECORATOR:
+		structural::decorator();
+		break;
+
+	case PATTERN::S_FLYWEIGHT:
+		structural::flyweight();
+		break;
+	case PATTERN::S_FACADE:
+		structural::facade();
+		break;
+			
+	case PATTERN::S_PROXY:
+		structural::proxy();
+		break;
 
 #pragma endregion structural
 
-		default:
-			
-			break;
+	default:
+
+		break;
 	}
-	return 0;
+
 }
 
 
+
+
 /*
-* 1. Design Pattern Definition
+* 1. Design PATTERN Definition
 * A design pattern is a common, 
 * repeatable solution for creating software
 * programs

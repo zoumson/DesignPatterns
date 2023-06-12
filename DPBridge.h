@@ -2,9 +2,9 @@
 #include "DPUtilities.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 2. Bridge
- * EN: Bridge Design Pattern
+ * EN: Bridge Design PATTERN
  *
  * Intent: Lets you split a large class or a set of closely related classes into
  * two separate hierarchies—abstraction and implementation—which can be

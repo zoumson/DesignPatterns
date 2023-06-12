@@ -2,7 +2,7 @@
 #include "DPBuilder.h"
 
 /*
-* Creational Pattern
+* Creational PATTERN
 3. Builder
 
 */

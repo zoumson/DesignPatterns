@@ -2,7 +2,7 @@
 #include "DPUtilities.h"
 
 /*
-* Creational Pattern
+* Creational PATTERN
 4. Prototype
 
 
@@ -263,7 +263,7 @@ namespace za
 //
 //#pragma region Interface5
 //
-//				// Prototype Design Pattern
+//				// Prototype Design PATTERN
 //				//
 //				// Intent: Lets you copy existing objects without making your code dependent on
 //				// their classes.

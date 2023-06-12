@@ -2,7 +2,7 @@
 #include "DPAdapter.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 1. Adapter
 
 

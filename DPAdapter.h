@@ -2,9 +2,9 @@
 #include "DPUtilities.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 * 1. Adapter
-* Adapter Design Pattern
+* Adapter Design PATTERN
 *
 * Intent: Provides a unified interface that allows objects with incompatible
 * interfaces to collaborate.

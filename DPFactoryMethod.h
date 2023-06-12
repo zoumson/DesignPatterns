@@ -2,7 +2,7 @@
 #include "DPUtilities.h"
 
 /*
-* Creational Pattern
+* Creational PATTERN
 1. Factory Method
 -Coffe machine
 -Used to create different type of coffe

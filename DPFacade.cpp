@@ -2,7 +2,7 @@
 #include "DPFacade.h"
 
 /*
-* Structural Pattern
+* Structural PATTERN
 Facade
 
 

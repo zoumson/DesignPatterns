@@ -6,6 +6,7 @@ namespace za
 		namespace ex
 		{
 
+
 #pragma region behavioral
 
 			namespace behavioral
@@ -558,58 +559,110 @@ namespace za
 				{
 
 					using namespace za::dp::behavioral::mem;
-					Canvas* canvas = new Canvas;
 
-					canvas->addShape("rhombus");
-					canvas->addShape("triangle");
-					canvas->addShape("square");
-					canvas->addShape("circle");
 
-					for (auto shape : canvas->getShapes())
+					auto example1 = [&]()
 					{
-						std::cout << shape << ", ";
+						std::unique_ptr<Canvas> canvas ( new Canvas);
+
+						canvas->addShape("rhombus");
+						canvas->addShape("triangle");
+						canvas->addShape("square");
+						canvas->addShape("circle");
+
+						for (auto shape : canvas->getShapes())
+						{
+							std::cout << shape << ", ";
+						};
+
+						std::cout << "\n";
+
+						canvas->undo();
+
+						for (auto shape : canvas->getShapes())
+						{
+							std::cout << shape << ", ";
+						};
+
+						std::cout << "\n";
+
+						canvas->addShape("rhombus");
+						canvas->addShape("triangle");
+						canvas->addShape("square");
+						canvas->addShape("circle");
+						canvas->undo();
+
+						for (auto shape : canvas->getShapes())
+						{
+							std::cout << shape << ", ";
+						};
+
+						std::cout << "\n";
+
+
 					};
 
-					std::cout << "\n";
-
-					canvas->undo();
-
-					for (auto shape : canvas->getShapes())
+					auto example2 = [&]()
 					{
-						std::cout << shape << ", ";
+
+
+
+
+
 					};
 
-					std::cout << "\n";
-
-					canvas->addShape("rhombus");
-					canvas->addShape("triangle");
-					canvas->addShape("square");
-					canvas->addShape("circle");
-					canvas->undo();
-
-					for (auto shape : canvas->getShapes())
+					auto example3 = [&]()
 					{
-						std::cout << shape << ", ";
+
 					};
 
-					std::cout << "\n";
+					example1();
+					//example2();
+					//example3();
 
-					delete canvas;
+
+
+					
 
 				}
 				void nullObject()
 				{
 					using namespace za::dp::behavioral::nob;
 
-					SomeTask task1(new ConsoleLogger);
-					SomeTask task2(new FileLogger("logs.txt"));
-					SomeTask task3(new ApiLogger("loggingsite.com/api/logs"));
-					SomeTask task4;
+					auto example1 = [&]()
+					{
 
-					task1.execute();
-					task2.execute();
-					task3.execute();
-					task4.execute();
+						SomeTask task1(new ConsoleLogger);
+						SomeTask task2(new FileLogger("logs.txt"));
+						SomeTask task3(new ApiLogger("loggingsite.com/api/logs"));
+						SomeTask task4;
+
+						task1.execute();
+						task2.execute();
+						task3.execute();
+						task4.execute();
+
+					};
+
+					auto example2 = [&]()
+					{
+
+
+
+
+
+					};
+
+					auto example3 = [&]()
+					{
+
+					};
+
+					example1();
+					//example2();
+					//example3();
+
+
 				}
 				/*
 				void iterMemNob()
@@ -808,9 +861,7 @@ namespace za
 					example3();
 					example4();
 
-				}
-				
-				
+				}				
 				void prototypee()
 				{
 					using namespace za::dp::creational::pro;
@@ -901,9 +952,54 @@ namespace za
 				}
 				void singleton()
 				{
-					za::dp::creational::sin::Leader::getInstance()->giveSpeech();
-					za::dp::creational::sin::Leader* elected = elected->getInstance();
-					elected->giveSpeech();
+
+					using namespace za::dp::creational::sin;
+					auto example1 = [&]()
+					{
+						LeaderS1::getInstance()->giveSpeech();
+						LeaderS1* elected = elected->getInstance();
+						elected->giveSpeech();
+						
+						LeaderS1::destroyInstance();
+					};
+					auto example2 = [&]()
+					{
+						BluetoothS2::instance()->setSpeed(20);
+						BluetoothS2::instance()->send("First Object");
+
+						BluetoothS2::instance()->send("Second Object");
+
+						std::cout << "Second Object should be same as the first one" << std::endl;
+						BluetoothS2::destroyInstance();
+					};
+					auto example3 = [&]()
+					{
+						SingletonS3* obj1 = SingletonS3::getInstance();
+						SingletonS3* obj2 = SingletonS3::getInstance();
+						if (obj1 == obj2) 
+						{
+							std::cout << "obj1 and obj2 are the same instance." << std::endl;
+						}
+						else 
+						{
+							std::cout << "obj1 and obj2 are different instances." << std::endl;
+						}
+					};
+					auto example4 = [&]()
+					{
+
+					};
+					auto example5 = [&]()
+					{
+						//Dog5* dog5 = new Dog5;
+						//who_am_i(dog5);
+						//delete dog5;
+					};
+					//example1();
+					//example2();
+					example3();
+					//example4();
+					//example5();
 				}
 			}
 
@@ -1055,7 +1151,6 @@ namespace za
 					//example2();
 					example3();
 				}
-
 				void composite()
 				{
 					using namespace za::dp::structural::cmp;
@@ -1390,6 +1485,8 @@ namespace za
 					//example4();
 
 				}
+
+
 				void facade()
 				{
 					using namespace za::dp::structural::fa;
@@ -1404,6 +1501,28 @@ namespace za
 					
 					
 					example1();
+
+
+
+				}
+				
+
+				void proxy()
+				{
+					using namespace za::dp::structural::prx;
+					auto example1 = [&]()
+					{
+
+					};
+										
+					auto example1 = [&]()
+					{
+
+					};
+					
+					
+					example1();
+					//example1();
 
 
 

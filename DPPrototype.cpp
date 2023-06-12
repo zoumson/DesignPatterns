@@ -2,7 +2,7 @@
 #include "DPPrototype.h"
 
 /*
-* Creational Pattern
+* Creational PATTERN
 4. Prototype
 
 

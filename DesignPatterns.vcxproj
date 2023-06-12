@@ -148,6 +148,7 @@
     <ClCompile Include="DPMemento.cpp" />
     <ClCompile Include="DPNullObject.cpp" />
     <ClCompile Include="DPPrototype.cpp" />
+    <ClCompile Include="DPProxy.cpp" />
     <ClCompile Include="DPSingleton.cpp" />
     <ClCompile Include="DPState.cpp" />
     <ClCompile Include="DPStrategy.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="DPMemento.h" />
     <ClInclude Include="DPNullObject.h" />
     <ClInclude Include="DPPrototype.h" />
+    <ClInclude Include="DPProxy.h" />
     <ClInclude Include="DPSingleton.h" />
     <ClInclude Include="DPState.h" />
     <ClInclude Include="DPStrategy.h" />

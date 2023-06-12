@@ -2,7 +2,7 @@
 #include "DPUtilities.h"
 
 /*
-* Creational Pattern
+* Creational PATTERN
 2. Abstract Factory 
 
 */

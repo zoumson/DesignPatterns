@@ -2,7 +2,7 @@
 #include "DPUtilities.h"
 
 /*
-* Creational Pattern
+* Creational PATTERN
 3. Builder
 a. Separate construction of complex objects
 b. Build a complex object one step at a time
