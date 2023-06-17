@@ -7,14 +7,14 @@ void runPattern(const PATTERN& pat);
 
 int main()
 {
-	const PATTERN pat = PATTERN::C_SINGLETON;
+	const PATTERN pat = PATTERN::B_CHAIN_OF_RESPONSABILITY;
 	runPattern(pat);
 	return 0;
 }
 
 void runPattern(const PATTERN& pat)
 {
-
+	std::cout << "[start]\n\n";
 	switch (pat)
 	{
 
@@ -128,7 +128,7 @@ void runPattern(const PATTERN& pat)
 
 		break;
 	}
-
+	std::cout << "\n\n[end]\n";
 }
 
 

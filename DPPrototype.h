@@ -258,6 +258,37 @@ namespace za
 #pragma endregion Factory4
 
 #pragma endregion Example4
+
+#pragma region Example5
+
+				class AnimalP5
+				{
+				public:
+					virtual ~AnimalP5() = default;
+					virtual void makeSound() const = 0;
+					virtual std::unique_ptr<AnimalP5> clone() const = 0; // Prototype design pattern
+				};
+	
+				class SheepP5 : public AnimalP5
+				{
+				public:
+					explicit SheepP5(std::string name);
+
+					void makeSound() const override;
+					std::unique_ptr<AnimalP5> clone() const override;  // Prototype design pattern
+
+				private:
+					std::string name_;
+				};
+
+
+#pragma endregion Example5
+
+
+
+
+
+
 //
 //#pragma region Example5
 //

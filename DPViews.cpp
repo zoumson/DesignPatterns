@@ -51,17 +51,17 @@ namespace za
 				}
 				void command()
 				{
+					std::cout << "\n[command]\n";
 					using namespace za::dp::behavioral::cmd;
-
 
 					auto example1 = [&]()
 					{
+						std::cout << "\n[example1]\n";
+						std::unique_ptr<CanvasC1> canvas(new CanvasC1);
 
-						std::unique_ptr<Canvas> canvas(new Canvas);
-
-						std::unique_ptr < Button> addTriangleButton(new Button(new AddShapeCommand("triangle", canvas.get())));
-						std::unique_ptr < Button> addSquareButton(new Button(new AddShapeCommand("square", canvas.get())));
-						std::unique_ptr < Button> clearButton(new Button(new ClearCommand(canvas.get())));
+						std::unique_ptr < ButtonC1> addTriangleButton(new ButtonC1(new AddShapeCommandC1("triangle", canvas.get())));
+						std::unique_ptr < ButtonC1> addSquareButton(new ButtonC1(new AddShapeCommandC1("square", canvas.get())));
+						std::unique_ptr < ButtonC1> clearButton(new ButtonC1(new ClearCommandC1(canvas.get())));
 
 						addTriangleButton->click();
 
@@ -81,8 +81,26 @@ namespace za
 
 					auto example2 = [&]()
 					{
+						std::cout << "\n[example2]\n";
 
+						CalculatorC2 calculator{};
 
+						auto op1 = std::make_unique<AddC2>(3);
+						auto op2 = std::make_unique<AddC2>(7);
+						auto op3 = std::make_unique<SubtractC2>(4);
+						auto op4 = std::make_unique<SubtractC2>(2);
+
+						calculator.compute(std::move(op1));  // Computes 0 + 3, stores and returns 3
+						calculator.compute(std::move(op2));  // Computes 3 + 7, stores and returns 10
+						calculator.compute(std::move(op3));  // Computes 10 - 4, stores and returns 6
+						calculator.compute(std::move(op4));  // Computes 6 - 2, stores and returns 4
+
+						calculator.undoLast();  // Reverts the last operation,
+						// stores and returns 6
+
+						int const res = calculator.result();  // Get the final result: 6
+
+						std::cout << std::endl << "Calculator Result " << res << std::endl;
 
 
 
@@ -90,11 +108,12 @@ namespace za
 
 					auto example3 = [&]()
 					{
+						std::cout << "\n[example3]\n";
 
 					};
 
-					example1();
-					//example2();
+					//example1();
+					example2();
 					//example3();
 
 
@@ -153,18 +172,19 @@ namespace za
 				}
 				void observer()
 				{
+					std::cout << "\n[observer]\n";
 					using namespace za::dp::behavioral::ob;
 
 
 					auto example1 = [&]()
 					{
+						std::cout << "\n[example1]\n";
+						std::unique_ptr<ChatUserO1> user1 (new ChatUserO1("Jim"));
+						std::unique_ptr<ChatUserO1> user2 ( new ChatUserO1("Barb"));
+						std::unique_ptr<ChatUserO1> user3 ( new ChatUserO1("Hannah"));
 
-						std::unique_ptr<ChatUser> user1 (new ChatUser("Jim"));
-						std::unique_ptr<ChatUser> user2 ( new ChatUser("Barb"));
-						std::unique_ptr<ChatUser> user3 ( new ChatUser("Hannah"));
-
-						std::unique_ptr < ChatGroup> group1 ( new ChatGroup("Gardening group"));
-						std::unique_ptr < ChatGroup> group2 ( new ChatGroup("Dog-lovers group"));
+						std::unique_ptr < ChatGroupO1> group1 ( new ChatGroupO1("Gardening group"));
+						std::unique_ptr < ChatGroupO1> group2 ( new ChatGroupO1("Dog-lovers group"));
 
 						group1->subscribe(user1.get());
 						group1->subscribe(user2.get());
@@ -178,15 +198,63 @@ namespace za
 
 					auto example2 = [&]()
 					{
+						std::cout << "\n[example2]\n";
+						std::unique_ptr<NameObserverO2> nameObserver(new NameObserverO2);
+						std::unique_ptr<AddressObserverO2> addressObserver(new AddressObserverO2);
+
+						std::unique_ptr<PersonO2> homer(new PersonO2("Homer", "Simpson"));
+						std::unique_ptr<PersonO2> marge(new PersonO2("Homer", "Simpson"));
+						std::unique_ptr<PersonO2> monty(new PersonO2("Montgomery", "Burns"));
 
 
+						// Attaching observers
+						homer->attach(nameObserver.release());
+						marge->attach(addressObserver.release());
+						monty->attach(addressObserver.release());
 
+						// Updating information on Homer Simpson
+						homer->forename("Homer Jay");  // Adding his middle name
+
+						// Updating information on Marge Simpson
+						marge->address("712 Red Bark Lane, Henderson, Clark County, Nevada 89011");
+
+						// Updating information on Montgomery Burns
+						monty->address("Springfield Nuclear Power Plant");
+
+						// Detaching observers
+						homer->detach(nameObserver.release());
 
 
 					};
 
 					auto example3 = [&]()
 					{
+						std::cout << "\n[example3]\n";
+
+						using PersonObserverO3 = ObserverO3<PersonO3, PersonO3::StateChange>;
+
+						PersonObserverO3 nameObserver(propertyChangedO3);
+
+						PersonObserverO3 addressObserver(
+							[/*captured state*/](PersonO3 const& person, PersonO3::StateChange property) 
+							{
+								if (property == PersonO3::StateChange::addressChanged)
+								{
+									std::cout << "Respond to changed address" << std::endl;
+								}
+							});
+
+						std::unique_ptr<PersonO3> homer(new PersonO3("Homer", "Simpson"));
+						std::unique_ptr<PersonO3> marge(new PersonO3("Homer", "Simpson"));
+						std::unique_ptr<PersonO3> monty(new PersonO3("Montgomery", "Burns"));
+
+
+						// Attaching observers
+						homer->attach(&nameObserver);
+						marge->attach(&addressObserver);
+						monty->attach(&addressObserver);
+
+						homer->forename("Homer Adam");
 
 					};
 
@@ -338,32 +406,56 @@ namespace za
 				}
 				void strategy()
 				{
+					std::cout << "\n[strategy]\n";
 					using namespace za::dp::behavioral::str;
 
 					auto example1 = [&]()
 					{
-						Person businessPerson(new FormalGreetingStrategy());
-						Person normalPerson(new NormalGreetingStrategy());
-						Person coolPerson(new InformalGreetingStrategy());
-						Person politician(new FormalGreetingStrategy());
+						std::cout << "\n[example1]\n";
+
+						std::unique_ptr<PersonS1> normalPerson(new PersonS1(new NormalGreetingStrategyS1));
+						std::unique_ptr<PersonS1> businessPerson(new PersonS1(new FormalGreetingStrategyS1));
+						std::unique_ptr<PersonS1> coolPerson(new PersonS1(new InformalGreetingStrategyS1));
+						std::unique_ptr<PersonS1> politician(new PersonS1(new FormalGreetingStrategyS1));
+
+						//PersonS1 normalPerson(new NormalGreetingStrategyS1());
+						//PersonS1 coolPerson(new InformalGreetingStrategyS1());
+						//PersonS1 politician(new FormalGreetingStrategyS1());
 
 						std::cout << "The businessperson says: ";
-						businessPerson.greet("Shaun");
+						businessPerson->greet("Shaun");
 
 						std::cout << "The normal person says: ";
-						normalPerson.greet("Shaun");
+						normalPerson->greet("Shaun");
 
 						std::cout << "The cool person says: ";
-						coolPerson.greet("Shaun");
+						coolPerson->greet("Shaun");
 
 						std::cout << "The politician says: ";
-						politician.greet("Shaun");
+						politician->greet("Shaun");
 
 					};
 
 					auto example2 = [&]()
 					{
+						std::cout << "\n[example2]\n";
+						using ShapesS2 = std::vector<std::unique_ptr<ShapeS2>>;
 
+						ShapesS2 shapes{};
+
+						// Creating some shapes, each one
+						//   equipped with the according OpenGL drawing strategy
+						shapes.emplace_back(
+							std::make_unique<CircleS2>(
+								2.3, std::make_unique<OpenGLCircleStrategyS2>(/*...red...*/)));
+						shapes.emplace_back(
+							std::make_unique<SquareS2>(
+								1.2, std::make_unique<OpenGLSquareStrategyS2>(/*...green...*/)));
+						shapes.emplace_back(
+							std::make_unique<CircleS2>(
+								4.1, std::make_unique<OpenGLCircleStrategyS2>(/*...blue...*/)));
+
+						drawAllShapesS2(shapes);
 
 
 
@@ -372,7 +464,25 @@ namespace za
 
 					auto example3 = [&]()
 					{
+						std::cout << "\n[example3]\n";
+						using ShapesS3 = std::vector<std::unique_ptr<ShapeS3>>;
 
+						ShapesS3 shapes{};
+
+						// Creating some shapes, each one
+						//   equipped with the according OpenGL drawing strategy
+						shapes.emplace_back(
+							std::make_unique<CircleS3>(2.3, OpenGLCircleStrategyS3(/*...red...*/)));
+						shapes.emplace_back(
+							std::make_unique<SquareS3>(1.2, OpenGLSquareStrategyS3(/*...green...*/)));
+						shapes.emplace_back(
+							std::make_unique<CircleS3>(4.1, OpenGLCircleStrategyS3(/*...blue...*/)));
+
+						// Drawing all shapes
+						for (auto const& shape : shapes)
+						{
+							shape->draw();
+						}
 					};
 
 					example1();
@@ -425,18 +535,20 @@ namespace za
 				}
 				void visitor()
 				{
+					std::cout << "\n[visitor]\n";
 					using namespace za::dp::behavioral::vis;
 
 
 					auto example1 = [&]()
 					{
+						std::cout << "\n[example1]\n";
 
-						Person person("John", 40);
-						Landmark landmark("Eiffel Tower", "Paris");
-						Car car("Chevrolet", "Camaro");
+						PersonV1 person("John", 40);
+						LandmarkV1 landmark("Eiffel Tower", "Paris");
+						CarV1 car("Chevrolet", "Camaro");
 
-						std::unique_ptr<DatabaseVisitor> dbv ( new DatabaseVisitor);
-						std::unique_ptr<TextFileVisitor> tfv ( new TextFileVisitor);
+						std::unique_ptr<DatabaseVisitorV1> dbv ( new DatabaseVisitorV1);
+						std::unique_ptr<TextFileVisitorV1> tfv ( new TextFileVisitorV1);
 
 						person.accept(dbv.get());
 						landmark.accept(dbv.get());
@@ -451,21 +563,43 @@ namespace za
 
 					auto example2 = [&]()
 					{
+						std::cout << "\n[example2]\n";
 
+						ShapesV2 shapes;
 
+						shapes.emplace_back(CircleV2{ 2.3 });
+						shapes.emplace_back(SquareV2{ 1.2 });
+						shapes.emplace_back(CircleV2{ 4.1 });
 
-
-
+						drawAllShapesV2(shapes);
 					};
 
 					auto example3 = [&]()
 					{
+						std::cout << "\n[example3]\n";
 
+						using ShapesV3 = std::vector< std::unique_ptr<ShapeV3> >;
+
+						ShapesV3 shapes{};
+
+						// Creating some shapes
+						shapes.emplace_back(std::make_unique<CircleV3>(2.3));
+						shapes.emplace_back(std::make_unique<SquareV3>(1.2));
+						shapes.emplace_back(std::make_unique<CircleV3>(4.1));
+
+						// Drawing all shapes
+						drawAllShapesV3(shapes);
+					};
+
+					auto example4 = [&]()
+					{
+						std::cout << "\n[example4]\n";
 					};
 
 					example1();
 					//example2();
 					//example3();
+					//example4();
 
 
 				}
@@ -500,12 +634,13 @@ namespace za
 				*/
 				void iteratorr()
 				{
-					using namespace za::dp::behavioral::ite;
+					std::cout << "\n[iterator]\n";
 
+					using namespace za::dp::behavioral::ite;
 
 					auto example1 = [&]()
 					{
-
+						std::cout << "\n[example1]\n";
 						std::vector<int> numbers = { 1, 2, 3, 4, 5, 6, 7 };
 						NumberCollection nc(numbers);
 
@@ -534,7 +669,7 @@ namespace za
 
 					auto example2 = [&]()
 					{
-
+						std::cout << "\n[example2]\n";
 
 
 
@@ -543,7 +678,7 @@ namespace za
 
 					auto example3 = [&]()
 					{
-
+						std::cout << "\n[example3]\n";
 					};
 
 					example1();
@@ -752,11 +887,11 @@ namespace za
 					};
 
 					example1();
-					example2();
-					example3();
-					example4();
-					example5();
-					example6();
+					//example2();
+					//example3();
+					//example4();
+					//example5();
+					//example6();
 
 				}
 				void abstracFactory()
@@ -791,10 +926,10 @@ namespace za
 					};
 					
 					example1();
-					example2();
-					example3();
-					example4();
-					example5();
+					//example2();
+					//example3();
+					//example4();
+					//example5();
 				}
 				void builder()
 				{
@@ -941,11 +1076,20 @@ namespace za
 						//Dog5* dog5 = new Dog5;
 						//who_am_i(dog5);
 						//delete dog5;
+					};					
+					auto example6 = [&]()
+					{
+						std::unique_ptr<AnimalP5> dolly = std::make_unique<SheepP5>("Dolly");
+						std::unique_ptr<AnimalP5> dollyClone = dolly->clone();
+
+						dolly->makeSound();       // Triggers the first Dolly's beastly sound
+						dollyClone->makeSound();  // The clone sounds just like Dolly
 					};
 					//example1();
 					//example2();
 					//example3();
 					//example4();
+					//example5();
 					example5();
 
 
@@ -1145,6 +1289,11 @@ namespace za
 						circle1.draw();
 						circle2.draw();
 
+					};
+					auto example4 = [&]()
+					{
+						ElectricCarB4 ecar{};
+						ecar.drive();
 					};
 
 					//example1();
@@ -1485,8 +1634,6 @@ namespace za
 					//example4();
 
 				}
-
-
 				void facade()
 				{
 					using namespace za::dp::structural::fa;
@@ -1504,9 +1651,7 @@ namespace za
 
 
 
-				}
-				
-
+				}				
 				void proxy()
 				{
 					using namespace za::dp::structural::prx;
@@ -1515,7 +1660,7 @@ namespace za
 
 					};
 										
-					auto example1 = [&]()
+					auto example2 = [&]()
 					{
 
 					};

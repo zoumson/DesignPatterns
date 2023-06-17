@@ -169,6 +169,38 @@ namespace za
 
 #pragma region Example4
 
+				CarB4::CarB4(std::unique_ptr<EngineB4> engine)
+					: pimpl_{ std::move(engine) }
+				{};
+				EngineB4* CarB4::getEngine() 
+				{ 
+					return pimpl_.get(); 
+				}
+				EngineB4 const* CarB4::getEngine() const 
+				{ 
+					return pimpl_.get(); 
+				}
+	
+
+				void ElectricEngineB4::start()
+				{
+					std::cout << "Starting the 'ElectricEngine'...\n";
+				}
+				void ElectricEngineB4::stop()
+				{
+					std::cout << "Stopping the 'ElectricEngine'...\n";
+				}
+
+				ElectricCarB4::ElectricCarB4()
+					: CarB4{ std::make_unique<ElectricEngineB4>( /*engine arguments*/) }
+					// ... Initialization of the other data members
+				{};
+				void ElectricCarB4::drive()
+				{
+					getEngine()->start();
+					std::cout << "Driving the 'ElectricCar'...\n";
+					getEngine()->stop();
+				}
 #pragma endregion Example4
 
 #pragma region Example5

@@ -261,7 +261,63 @@ namespace za
 
 #pragma region Example4
 
+				class EngineB4
+				{
+				public:
+					virtual ~EngineB4() = default;
+					virtual void start() = 0;
+					virtual void stop() = 0;
+					// ... more engine-specific functions
+
+				private:
+					// ...
+				};
+
+				class CarB4
+				{
+				protected:
+					explicit CarB4(std::unique_ptr<EngineB4> engine);
+
+				public:
+					virtual ~CarB4() = default;
+					virtual void drive() = 0;
+					// ... more car-specific functions
+
+				protected:
+					EngineB4* getEngine();
+					EngineB4 const* getEngine() const;
+
+				private:
+					std::unique_ptr<EngineB4> pimpl_;  // Pointer-to-implementation (pimpl)
+
+					// ... more car-specific data members (wheels, drivetrain, ...)
+				};
+
+				class ElectricEngineB4 : public EngineB4
+				{
+				public:
+					void start() override;
+					void stop() override;
+
+				private:
+					// ...
+				};
+
+				class ElectricCarB4 : public CarB4
+				{
+				public:
+					ElectricCarB4();
+
+					void drive();
+					// ...
+
+				private:
+					// ...
+				};
+
+
 #pragma endregion Example4
+
 
 #pragma region Example5
 

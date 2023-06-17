@@ -285,6 +285,27 @@ namespace za
 #pragma endregion Factory4
 
 #pragma endregion Example4
+
+
+#pragma region Example5
+
+					SheepP5::SheepP5(std::string name) : name_{ std::move(name) } {}
+
+
+					void SheepP5::makeSound() const
+					{
+						std::cout << "baa\n";
+					}
+
+					std::unique_ptr<AnimalP5> SheepP5::clone() const
+					{
+						return std::make_unique<SheepP5>(*this);  // Copy-construct a sheep
+					}
+
+
+#pragma endregion Example5
+
+
 //
 //#pragma region Example5
 //
